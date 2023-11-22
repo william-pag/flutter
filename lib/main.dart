@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pag_flutter/constants/colors.dart';
+import 'items/app_bar.dart';
 import 'screens/bottom_navigation/home.dart';
 
 void main() {
@@ -46,26 +48,18 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bottom Navigation Example'),
+        backgroundColor: CustomColor.themeRed,
+        title: const AppBarCustom(),
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.watch_later_rounded),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-          ),
+              icon: Icon(Icons.watch_later_rounded), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ""),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue, // Color for selected item
