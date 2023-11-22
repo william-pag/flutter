@@ -27,8 +27,8 @@ class AppBarCustom extends StatelessWidget {
           child:
           Row(
             children: [
-              Text(name.replaceAll(" ", "\n"), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),),
-              const SizedBox(width: 5,),
+              Text(name.replaceAll(" ", "\n"), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14,), textAlign: TextAlign.end,),
+              const SizedBox(width: 10,),
               Image.network(avatar, width: 40, height: 40,)
             ],
           ),

@@ -44,6 +44,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  BottomNavigationBarItem _renderIcon(IconData iconMenu) {
+    return BottomNavigationBarItem(
+        icon: Icon(
+          iconMenu,
+        ),
+        label: "Home",
+        activeIcon: Container(
+          width: 70,
+          height: 35,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.deepPurple[100]),
+          child: Icon(
+            iconMenu,
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,73 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.grey[300],
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.home,
-              ),
-              label: "Home",
-              activeIcon: Container(
-                width: 70,
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.deepPurple[100]),
-                child: const Icon(
-                  Icons.home,
-                ),
-              )),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.watch_later_rounded),
-              label: "Deadline",
-              activeIcon: Container(
-                width: 70,
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.deepPurple[100]),
-                child: const Icon(
-                  Icons.watch_later_rounded,
-                ),
-              )),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.calendar_month),
-              label: "Reminder",
-              activeIcon: Container(
-                width: 70,
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.deepPurple[100]),
-                child: const Icon(
-                  Icons.calendar_month,
-                ),
-              )),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: "User",
-              activeIcon: Container(
-                width: 70,
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.deepPurple[100]),
-                child: const Icon(
-                  Icons.person,
-                ),
-              )),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.notifications),
-              label: "Notification",
-              activeIcon: Container(
-                width: 70,
-                height: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.deepPurple[100]),
-                child: const Icon(
-                  Icons.notifications,
-                ),
-              )),
+          _renderIcon(Icons.home),
+          _renderIcon(Icons.watch_later_rounded),
+          _renderIcon(Icons.calendar_month),
+          _renderIcon(Icons.person),
+          _renderIcon(Icons.notifications),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.indigo[900], // Color for selected item
