@@ -5,9 +5,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
+    return const HomePage();
   }
 }
 
@@ -25,87 +23,85 @@ class _HomePageState  extends State<HomePage> {
   String selectedDepartment = 'Select Department'; // Default selected value
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Column(
-        children: [
-          Container(
-            width: double.infinity, // Full width of the screen
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey), // Optional border
-              borderRadius: BorderRadius.circular(5), // Optional border radius
-            ),
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: DropdownButton<String>(
-              isExpanded: true, // Fill the width of the container
-              value: selectedStrategy,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    selectedStrategy = newValue;
-                  });
-                }
-              },
-              icon: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    left: BorderSide(
-                      color: Colors.grey, // Border color
-                      width: 2, // Border width
-                    ),
-                  ), // Optional border
-                ),
-                padding: const EdgeInsets.only(left: 5),
-                child: const Icon(IconData(0xf13d, fontFamily: 'MaterialIcons')),
-              ),
-              items: selectStrategies.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
+    return Column(
+      children: [
+        Container(
+          width: double.infinity, // Full width of the screen
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey), // Optional border
+            borderRadius: BorderRadius.circular(5), // Optional border radius
           ),
-          Container(
-            width: double.infinity, // Full width of the screen
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey), // Optional border
-              borderRadius: BorderRadius.circular(5), // Optional border radius
-            ),
-            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: DropdownButton<String>(
-              isExpanded: true, // Fill the width of the container
-              value: selectedDepartment,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    selectedDepartment = newValue;
-                  });
-                }
-              },
-              icon: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    left: BorderSide(
-                      color: Colors.grey, // Border color
-                      width: 2, // Border width
-                    ),
-                  ), // Optional border
-                ),
-                padding: const EdgeInsets.only(left: 5),
-                child: const Icon(IconData(0xf13d, fontFamily: 'MaterialIcons')),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: DropdownButton<String>(
+            isExpanded: true, // Fill the width of the container
+            value: selectedStrategy,
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  selectedStrategy = newValue;
+                });
+              }
+            },
+            icon: Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: Colors.grey, // Border color
+                    width: 2, // Border width
+                  ),
+                ), // Optional border
               ),
-              items: selectDepartments.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+              padding: const EdgeInsets.only(left: 5),
+              child: const Icon(IconData(0xf13d, fontFamily: 'MaterialIcons')),
             ),
-          )
-        ],
-      ),
+            items: selectStrategies.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+        Container(
+          width: double.infinity, // Full width of the screen
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey), // Optional border
+            borderRadius: BorderRadius.circular(5), // Optional border radius
+          ),
+          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: DropdownButton<String>(
+            isExpanded: true, // Fill the width of the container
+            value: selectedDepartment,
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  selectedDepartment = newValue;
+                });
+              }
+            },
+            icon: Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: Colors.grey, // Border color
+                    width: 2, // Border width
+                  ),
+                ), // Optional border
+              ),
+              padding: const EdgeInsets.only(left: 5),
+              child: const Icon(IconData(0xf13d, fontFamily: 'MaterialIcons')),
+            ),
+            items: selectDepartments.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        )
+      ],
     );
   }
 
