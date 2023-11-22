@@ -29,7 +29,17 @@ class AppBarCustom extends StatelessWidget {
             children: [
               Text(name.replaceAll(" ", "\n"), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14,), textAlign: TextAlign.end,),
               const SizedBox(width: 10,),
-              Image.network(avatar, width: 40, height: 40,)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Image.network(avatar),
+                ),
+              )
             ],
           ),
         ),
