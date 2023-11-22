@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/home.dart';
+import 'screens/bottom_navigation/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,23 +53,18 @@ class _MyHomePageState extends State<MyHomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.watch_later_rounded),
-            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
-            label: 'Profile',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
