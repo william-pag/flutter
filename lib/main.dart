@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: CustomColor.themeRed,
         title: const AppBarCustom(),
+        titleSpacing: 0,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
