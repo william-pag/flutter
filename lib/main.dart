@@ -49,22 +49,91 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomColor.themeRed,
-        title: const AppBarCustom(),
+        title: const AppBarCustom(
+          name: 'Alta Jackson',
+          avatar:
+              'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/403.jpg',
+        ),
         titleSpacing: 0,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.grey[300],
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.watch_later_rounded), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ""),
+              icon: const Icon(
+                Icons.home,
+              ),
+              label: "Home",
+              activeIcon: Container(
+                width: 70,
+                height: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.deepPurple[100]),
+                child: const Icon(
+                  Icons.home,
+                ),
+              )),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.watch_later_rounded),
+              label: "Deadline",
+              activeIcon: Container(
+                width: 70,
+                height: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.deepPurple[100]),
+                child: const Icon(
+                  Icons.watch_later_rounded,
+                ),
+              )),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.calendar_month),
+              label: "Reminder",
+              activeIcon: Container(
+                width: 70,
+                height: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.deepPurple[100]),
+                child: const Icon(
+                  Icons.calendar_month,
+                ),
+              )),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.person),
+              label: "User",
+              activeIcon: Container(
+                width: 70,
+                height: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.deepPurple[100]),
+                child: const Icon(
+                  Icons.person,
+                ),
+              )),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.notifications),
+              label: "Notification",
+              activeIcon: Container(
+                width: 70,
+                height: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.deepPurple[100]),
+                child: const Icon(
+                  Icons.notifications,
+                ),
+              )),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue, // Color for selected item
+        selectedItemColor: Colors.indigo[900], // Color for selected item
         onTap: _onItemTapped,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }

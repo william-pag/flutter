@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppBarCustom extends StatelessWidget {
-  const AppBarCustom({super.key});
-
+  final String avatar;
+  final String name;
+  const AppBarCustom({super.key, required this.avatar, required this.name});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -20,6 +21,18 @@ class AppBarCustom extends StatelessWidget {
           ),
         ),
         const Spacer(),
+        Container(
+          height: 50,
+          padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
+          child:
+          Row(
+            children: [
+              Text(name.replaceAll(" ", "\n"), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),),
+              const SizedBox(width: 5,),
+              Image.network(avatar, width: 40, height: 40,)
+            ],
+          ),
+        ),
       ],
     );
   }
