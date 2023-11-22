@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState  extends State<HomePage> {
   final List<String> selectStrategies = ['Select Strategy', 'Select Strategy2', 'Select Strategy3']; // List of dropdown items
   final List<String> selectDepartments = ['Select Department', 'Select Department2', 'Select Department3']; // List of dropdown items
+  final List<String> items = List.generate(1000, (index) => 'Option Option Option Option Option Option $index');
   String selectedStrategy = 'Select Strategy'; // Default selected value
   String selectedDepartment = 'Select Department'; // Default selected value
   @override
@@ -99,6 +100,17 @@ class _HomePageState  extends State<HomePage> {
                 child: Text(value),
               );
             }).toList(),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(items[index]),
+              );
+            },
           ),
         )
       ],

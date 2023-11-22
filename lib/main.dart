@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'screens/home.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,6 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
     const Home(),
     const Text('Search Page'),
     const Text('Profile Page'),
+    const Text('Profile1 Page'),
+    const Text('Profile2 Page'),
   ];
 
   void _onItemTapped(int index) {
@@ -55,11 +56,19 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.watch_later_rounded),
             label: 'Search',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
             label: 'Profile',
           ),
         ],
