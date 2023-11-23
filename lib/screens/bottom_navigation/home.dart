@@ -35,6 +35,7 @@ class _HomePageState  extends State<HomePage> {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: DropdownButton<String>(
+            underline: Container(),
             isExpanded: true, // Fill the width of the container
             value: selectedStrategy,
             onChanged: (String? newValue) {
@@ -73,6 +74,7 @@ class _HomePageState  extends State<HomePage> {
           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: DropdownButton<String>(
+            underline: Container(),
             isExpanded: true, // Fill the width of the container
             value: selectedDepartment,
             onChanged: (String? newValue) {
