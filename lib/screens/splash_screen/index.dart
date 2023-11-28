@@ -12,18 +12,18 @@ class SplashScreen extends StatelessWidget {
     initData();
   }
   void initData() {
-    SharedPreferences.getInstance().then((SharedPreferences store) {
-      String? token = store.getString('token');
-      if (token == null) {
-        if (kIsWeb) {
-          Get.toNamed('/login');
-        } else {
-          Get.to(Login());
-        }
-      }
-    }, onError: (error) {
-      print([16, error.toString()]);
-    });
+    // SharedPreferences.getInstance().then((SharedPreferences store) {
+    //   String? token = store.getString('token');
+    //   if (token == null) {
+    //     if (kIsWeb) {
+    //       Get.toNamed('/login');
+    //     } else {
+    //       Get.to(Login());
+    //     }
+    //   }
+    // }, onError: (error) {
+    //   print([16, error.toString()]);
+    // });
   }
 
   @override

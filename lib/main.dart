@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pag_flutter/screens/login/index.dart';
-import 'package:pag_flutter/screens/splash_screen/index.dart';
+import 'package:pag_flutter/screens/bottom_navigation/bottom_menu.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      home: SplashScreen(),
+      home: const BottomMenu(),
       getPages: [
         GetPage(name: '/login', page: () => Login())
       ],
