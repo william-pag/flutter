@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
         if (kIsWeb) {
           Get.toNamed('/login');
         } else {
-          Get.to(const Login());
+          Get.to(Login());
         }
       }
     }, onError: (error) {

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pag_flutter/constants/colors.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  Login({super.key});
+
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _passwordCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +34,23 @@ class Login extends StatelessWidget {
             ),
             FractionallySizedBox(
               widthFactor: 0.7,
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          width: 1, color: Colors.white)), // Optional border
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: const TextField(
-                  decoration: InputDecoration.collapsed(
-                      hintText: 'Username',
-                      hintStyle:
-                          TextStyle(color: Colors.white, letterSpacing: 1.0)),
-                  style: TextStyle(color: Colors.white),
+                height: 40,
+                child: TextField(
+                  controller: _emailCtrl,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                      hoverColor: Colors.white,
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
               ),
             ),
@@ -54,20 +59,23 @@ class Login extends StatelessWidget {
             ),
             FractionallySizedBox(
               widthFactor: 0.7,
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          width: 1, color: Colors.white)), // Optional border
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: const TextField(
-                  decoration: InputDecoration.collapsed(
-                      hintText: 'Password',
-                      hintStyle:
-                          TextStyle(color: Colors.white, letterSpacing: 1.0)),
-                  style: TextStyle(color: Colors.white),
+                height: 40,
+                child: TextField(
+                  controller: _passwordCtrl,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                      hoverColor: Colors.white,
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.white)),
                   obscureText: true,
                 ),
               ),

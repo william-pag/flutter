@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       home: SplashScreen(),
       getPages: [
-        GetPage(name: '/login', page: () => const Login())
+        GetPage(name: '/login', page: () => Login())
       ],
     );
   }
