@@ -2,22 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pag_flutter/service/service.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const HomePage();
-  }
-}
+  Home({super.key});
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   final List<String> selectStrategies = [
     'Select Strategy',
     'Select Strategy2',
@@ -54,9 +41,6 @@ class _HomePageState extends State<HomePage> {
                   value: selectedStrategy,
                   onChanged: (String? newValue) {
                     if (newValue != null) {
-                      setState(() {
-                        selectedStrategy = newValue;
-                      });
                     }
                   },
                   icon: Container(
@@ -95,9 +79,6 @@ class _HomePageState extends State<HomePage> {
             value: selectedDepartment,
             onChanged: (String? newValue) {
               if (newValue != null) {
-                setState(() {
-                  selectedDepartment = newValue;
-                });
               }
             },
             icon: Container(

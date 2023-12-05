@@ -4,9 +4,18 @@ import 'package:pag_flutter/constants/colors.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
+  static const String routeName = '/login';
+  static Route route() {
+    return MaterialPageRoute(builder: (BuildContext context) => Login(), settings: const RouteSettings(name: routeName),);
+  }
 
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
+
+  void signIn() {
+    // final email = _emailCtrl.text;
+    // final password = _passwordCtrl.text;
+  }
 
   @override
   Widget build(BuildContext context) {

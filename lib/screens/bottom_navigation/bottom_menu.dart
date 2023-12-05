@@ -27,7 +27,7 @@ class _MenuPageState extends State<MenuPage> {
 
   // Widgets for each tab/screen
   final List<Widget> _widgetOptions = <Widget>[
-    const Home(),
+    Home(),
     const Text('Search Page'),
     const Text('Profile Page'),
     const Text('Profile1 Page'),

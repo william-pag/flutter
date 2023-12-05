@@ -1,10 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:pag_flutter/screens/login/index.dart';
-import 'package:pag_flutter/screens/bottom_navigation/bottom_menu.dart';
-import 'package:get/get.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:pag_flutter/screens/screens.dart';
+import 'package:pag_flutter/service/app_router.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() {
-  runApp(const MainApp());
+  if (kIsWeb) {
+    runApp(const MainApp());
+  } else {
+    WidgetsFlutterBinding.ensureInitialized();
+    getApplicationDocumentsDirectory().then((Directory directory) {
+      HydratedStorage.build(storageDirectory: directory)
+          .then((HydratedStorage storage) {
+        HydratedBloc.storage = storage;
+        runApp(const MainApp());
+      });
+    });
+  }
 }
 
 class MainApp extends StatelessWidget {
@@ -12,13 +27,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      home: const BottomMenu(),
-      getPages: [
-        GetPage(name: '/login', page: () => Login())
-      ],
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: SplashScreen.routeName,
     );
   }
 }

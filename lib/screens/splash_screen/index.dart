@@ -1,15 +1,20 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pag_flutter/constants/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get/get.dart';
-
-import '../login/index.dart';
+import 'package:pag_flutter/screens/screens.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key}) {
     initData();
+  }
+  static const String routeName = '/';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (BuildContext context) => SplashScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
   }
   void initData() {
     // SharedPreferences.getInstance().then((SharedPreferences store) {
@@ -28,6 +33,12 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Timer(
+      const Duration(seconds: 20),
+      () {
+        Navigator.pushReplacementNamed(context, Login.routeName);
+      },
+    );
     return Scaffold(
       backgroundColor: CustomColor.themeRed,
       body: Center(
