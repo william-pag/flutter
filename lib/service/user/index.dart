@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:pag_flutter/query_string/mutation/mutation.dart';
-import 'package:pag_flutter/service/http.dart';
+import 'package:pag_flutter/config/http.dart';
 
 class UserService {
   static final shared = UserService();

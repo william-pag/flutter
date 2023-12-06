@@ -34,7 +34,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(
-      const Duration(seconds: 20),
+      const Duration(seconds: 2),
       () {
         Navigator.pushReplacementNamed(context, Login.routeName);
       },
