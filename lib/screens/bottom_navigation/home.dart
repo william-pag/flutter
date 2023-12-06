@@ -17,8 +17,8 @@ class Home extends StatelessWidget {
   ]; // List of dropdown items
   final List<String> items = List.generate(
       1000, (index) => 'Option Option Option Option Option Option $index');
-  String selectedStrategy = 'Select Strategy'; // Default selected value
-  String selectedDepartment = 'Select Department'; // Default selected value
+  final String selectedStrategy = 'Select Strategy'; // Default selected value
+  final String selectedDepartment = 'Select Department'; // Default selected value
   @override
   Widget build(BuildContext context) {
     return Column(
