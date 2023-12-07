@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Error {
   List<ErrorElement> errors;
   dynamic data;
