@@ -1,10 +1,5 @@
 import 'dart:convert';
 
-Strategies strategiesFromJson(String str) =>
-    Strategies.fromJson(json.decode(str));
-
-String strategiesToJson(Strategies data) => json.encode(data.toJson());
-
 class Strategies {
   StrategiesData data;
 
