@@ -119,15 +119,41 @@ class _LoginContent extends StatelessWidget {
                     EdgeInsets.symmetric(horizontal: 40)),
                 backgroundColor:
                     MaterialStatePropertyAll<Color>(Colors.deepPurple[900]!)),
-            child: BlocConsumer<LoginBloc, LoginState>(
-              listener: (BuildContext context, LoginState state) {
-                print([124, state]);
-              },
+            child: BlocBuilder<LoginBloc, LoginState>(
               builder: (BuildContext context, LoginState state) {
-                return const Text(
-                  'Login',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                );
+                if (state.btnSingIn == ButtonStatus.loading) {
+                  return const SizedBox(
+                    width: 100,
+                    height: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Loading',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Text(
+                    'Login',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  );
+                }
               },
             ),
           )

@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/screens/screens.dart';
 import 'package:pag_flutter/config/app_router.dart';
 import 'package:path_provider/path_provider.dart';
