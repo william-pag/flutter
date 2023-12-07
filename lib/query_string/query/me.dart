@@ -1,4 +1,4 @@
-String me() {
+String meStr() {
   return '''
   query {
     me {

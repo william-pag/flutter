@@ -1,33 +1,33 @@
 class LoginModel {
-  Data data;
+  LoginData data;
 
   LoginModel({
     required this.data,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    data: Data.fromJson(json["data"]),
-  );
+        data: LoginData.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-  };
+        "data": data.toJson(),
+      };
 }
 
-class Data {
+class LoginData {
   Login login;
 
-  Data({
+  LoginData({
     required this.login,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    login: Login.fromJson(json["login"]),
-  );
+  factory LoginData.fromJson(Map<String, dynamic> json) => LoginData(
+        login: Login.fromJson(json["login"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "login": login.toJson(),
-  };
+        "login": login.toJson(),
+      };
 }
 
 class Login {
@@ -38,10 +38,10 @@ class Login {
   });
 
   factory Login.fromJson(Map<String, dynamic> json) => Login(
-    accessToken: json["accessToken"],
-  );
+        accessToken: json["accessToken"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "accessToken": accessToken,
-  };
+        "accessToken": accessToken,
+      };
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pag_flutter/bloc/bloc.dart';
+import 'package:pag_flutter/constants/constants.dart';
+import 'package:pag_flutter/screens/screens.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -16,7 +18,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(235, 143, 10, 0),
+      backgroundColor: CustomColor.themeRed,
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(),
         child: _LoginContent(),
@@ -27,14 +29,17 @@ class Login extends StatelessWidget {
 
 class _LoginContent extends StatelessWidget {
   _LoginContent();
-  final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _passwordCtrl = TextEditingController();
+  final TextEditingController _emailCtrl =
+      TextEditingController(text: 'ajohannessen@pag.com');
+  final TextEditingController _passwordCtrl =
+      TextEditingController(text: 'abc123');
 
   void signIn(BuildContext context) {
-    // final email = _emailCtrl.text;
-    // final password = _passwordCtrl.text;
+    final email = _emailCtrl.text;
+    final password = _passwordCtrl.text;
     context.read<LoginBloc>().add(
-        ExecuteLoginEvent(email: 'ajohannessen@pag.com', password: 'abc123'));
+          ExecuteLoginEvent(email: email, password: password),
+        );
   }
 
   @override
@@ -119,9 +124,23 @@ class _LoginContent extends StatelessWidget {
                     EdgeInsets.symmetric(horizontal: 40)),
                 backgroundColor:
                     MaterialStatePropertyAll<Color>(Colors.deepPurple[900]!)),
-            child: BlocBuilder<LoginBloc, LoginState>(
+            child: BlocConsumer<LoginBloc, LoginState>(
+              listener: (BuildContext context, LoginState state) {
+                if (state.btnSignIn == LoginBtnStatus.success) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Login successfully',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      duration: Duration(milliseconds: 500),
+                    ),
+                  );
+                  Navigator.of(context).pushNamed(BottomMenu.routeName);
+                }
+              },
               builder: (BuildContext context, LoginState state) {
-                if (state.btnSingIn == ButtonStatus.loading) {
+                if (state.btnSignIn == LoginBtnStatus.loading) {
                   return const SizedBox(
                     width: 100,
                     height: 30,
@@ -141,7 +160,7 @@ class _LoginContent extends StatelessWidget {
                           width: 15,
                           height: 15,
                           child: CircularProgressIndicator(
-                          strokeWidth: 2,
+                            strokeWidth: 2,
                             color: Colors.white,
                           ),
                         ),

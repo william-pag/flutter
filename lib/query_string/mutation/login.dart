@@ -1,4 +1,4 @@
-String loginMutation({required String email, required String password}) {
+String loginStr({required String email, required String password}) {
   return '''
     mutation {
       login(email: "$email", password: "$password") {

@@ -1,4 +1,4 @@
-String getDepartments({int strategyId = 0}) {
+String getDepartmentsStr({int strategyId = 0}) {
   return '''
   {
     getAllDepartments(strategyId: $strategyId) {

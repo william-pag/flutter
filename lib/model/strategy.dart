@@ -32,7 +32,7 @@ class StrategiesData {
       };
 }
 
-class Strategy {
+final class Strategy {
   int id;
   String name;
 

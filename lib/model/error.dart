@@ -1,21 +1,17 @@
-class Error {
+class ErrorResponse {
   List<ErrorElement> errors;
-  dynamic data;
 
-  Error({
+  ErrorResponse({
     required this.errors,
-    required this.data,
   });
 
-  factory Error.fromJson(Map<String, dynamic> json) => Error(
+  factory ErrorResponse.fromJson(Map<String, dynamic> json) => ErrorResponse(
         errors: List<ErrorElement>.from(
             json["errors"].map((x) => ErrorElement.fromJson(x))),
-        data: json["data"],
       );
 
   Map<String, dynamic> toJson() => {
         "errors": List<dynamic>.from(errors.map((x) => x.toJson())),
-        "data": data,
       };
 }
 

@@ -1,4 +1,4 @@
-String getAllStategies() {
+String getAllStategiesStr() {
   return '''
   {
     getAllStrategies {

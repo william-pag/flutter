@@ -1,2 +1,2 @@
-export 'bottom_navigation/deadline.dart';
 export 'user/index.dart';
+export 'strategy/index.dart';

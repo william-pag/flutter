@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:pag_flutter/constants/colors.dart';
 import 'package:pag_flutter/items/app_bar.dart';
-import 'package:pag_flutter/screens/bottom_navigation/home.dart';
+import 'package:pag_flutter/screens/bottom_navigation/deadline.dart';
 
 class BottomMenu extends StatelessWidget {
+  static const String routeName = 'bottom_menu';
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (BuildContext context) => const BottomMenu(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   const BottomMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MenuPage(),
-    );
+    return const MenuPage();
   }
 }
 
@@ -27,7 +32,7 @@ class _MenuPageState extends State<MenuPage> {
 
   // Widgets for each tab/screen
   final List<Widget> _widgetOptions = <Widget>[
-    Home(),
+    Deadline(),
     const Text('Search Page'),
     const Text('Profile Page'),
     const Text('Profile1 Page'),
@@ -66,7 +71,7 @@ class _MenuPageState extends State<MenuPage> {
         title: const AppBarCustom(
           name: 'Alta Jackson',
           avatar:
-          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/403.jpg',
+              'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/403.jpg',
         ),
         titleSpacing: 0,
       ),

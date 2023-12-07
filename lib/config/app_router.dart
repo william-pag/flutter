@@ -8,6 +8,8 @@ class AppRouter {
         return SplashScreen.route();
       case Login.routeName:
         return Login.route();
+      case BottomMenu.routeName:
+        return BottomMenu.route();
       default:
         return Error.route();
     }
