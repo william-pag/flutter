@@ -1,12 +1,12 @@
 class Departments {
-  DepartmentsData data;
+  Data data;
 
   Departments({
     required this.data,
   });
 
   factory Departments.fromJson(Map<String, dynamic> json) => Departments(
-        data: DepartmentsData.fromJson(json["data"]),
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -14,17 +14,16 @@ class Departments {
       };
 }
 
-class DepartmentsData {
-  List<GetAllDepartment> getAllDepartments;
+class Data {
+  List<Department> getAllDepartments;
 
-  DepartmentsData({
+  Data({
     required this.getAllDepartments,
   });
 
-  factory DepartmentsData.fromJson(Map<String, dynamic> json) =>
-      DepartmentsData(
-        getAllDepartments: List<GetAllDepartment>.from(
-            json["getAllDepartments"].map((x) => GetAllDepartment.fromJson(x))),
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        getAllDepartments: List<Department>.from(
+            json["getAllDepartments"].map((x) => Department.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,23 +32,45 @@ class DepartmentsData {
       };
 }
 
-class GetAllDepartment {
+class Department {
   int id;
   String name;
+  DepartmentStrategy? strategy;
 
-  GetAllDepartment({
+  Department({
     required this.id,
     required this.name,
+    required this.strategy,
   });
 
-  factory GetAllDepartment.fromJson(Map<String, dynamic> json) =>
-      GetAllDepartment(
+  factory Department.fromJson(Map<String, dynamic> json) => Department(
         id: json["id"],
         name: json["name"],
+        strategy: json["strategy"] == null
+            ? null
+            : DepartmentStrategy.fromJson(json["strategy"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "strategy": strategy?.toJson(),
+      };
+}
+
+class DepartmentStrategy {
+  int id;
+
+  DepartmentStrategy({
+    required this.id,
+  });
+
+  factory DepartmentStrategy.fromJson(Map<String, dynamic> json) =>
+      DepartmentStrategy(
+        id: json["id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
       };
 }

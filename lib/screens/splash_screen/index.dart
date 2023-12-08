@@ -36,7 +36,7 @@ class SplashScreen extends StatelessWidget {
     Timer(
       const Duration(seconds: 2),
       () {
-        Navigator.pushReplacementNamed(context, Login.routeName);
+        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
       },
     );
     return Scaffold(

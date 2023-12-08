@@ -6,8 +6,8 @@ class AppRouter {
     switch (routeSettings.name) {
       case SplashScreen.routeName:
         return SplashScreen.route();
-      case Login.routeName:
-        return Login.route();
+      case LoginScreen.routeName:
+        return LoginScreen.route();
       case BottomMenu.routeName:
         return BottomMenu.route();
       default:

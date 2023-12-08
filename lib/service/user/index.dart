@@ -16,7 +16,6 @@ class UserService {
     } else {
       final loginToken = LoginModel.fromJson(response.data);
       final token = loginToken.data.login.accessToken;
-      print([13, token]);
       HttpClient.shard.token = token;
       return token;
     }

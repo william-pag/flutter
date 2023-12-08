@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pag_flutter/bloc/department/department_bloc.dart';
 import 'package:pag_flutter/bloc/strategy/strategy_bloc.dart';
 import 'package:pag_flutter/config/config.dart';
 import 'package:pag_flutter/constants/constants.dart';
 import 'package:pag_flutter/model/model.dart';
+import 'package:pag_flutter/screens/screens.dart';
 
 class Deadline extends StatelessWidget {
   Deadline({super.key});
@@ -19,8 +21,16 @@ class Deadline extends StatelessWidget {
       'Select Department'; // Default selected value
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => StrategyBloc()..add(StrategyLoading()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext _) => StrategyBloc()..add(StrategyLoading()),
+        ),
+        BlocProvider(
+          create: (BuildContext _) =>
+              DepartmentBloc()..add(DepartmentLoading()),
+        ),
+      ],
       child: _Deadline(
           selectedDepartment: selectedDepartment,
           selectDepartments: selectDepartments,
@@ -54,7 +64,9 @@ class _Deadline extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: BlocConsumer<StrategyBloc, StrategyState>(
             listener: (context, state) {
-              print([59, state]);
+              if (state.status == Progress.error) {
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
+              }
             },
             builder: (BuildContext context, StrategyState state) {
               if (state.status == Progress.loaded) {
@@ -63,11 +75,13 @@ class _Deadline extends StatelessWidget {
                   isExpanded: true, // Fill the width of the container
                   value: state.selectedStategy,
                   onChanged: (Strategy? newValue) {
-                    print([66, state.selectedStategy, newValue]);
                     if (newValue != null) {
                       context
                           .read<StrategyBloc>()
                           .add(SelectStrategy(selectedStategy: newValue));
+                      context
+                          .read<DepartmentBloc>()
+                          .add(FilterDepartments(strategy: newValue));
                     }
                   },
                   icon: Container(
@@ -87,13 +101,7 @@ class _Deadline extends StatelessWidget {
                     return DropdownMenuItem<Strategy>(
                       key: Key(strategy.id.toString()),
                       value: strategy,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(strategy.name),
-                          Text(strategy.id.toString()),
-                        ],
-                      ),
+                      child: Text(strategy.name),
                     );
                   }).toList(),
                 );
@@ -115,41 +123,75 @@ class _Deadline extends StatelessWidget {
             },
           ),
         ),
-        // Container(
-        //   width: double.infinity, // Full width of the screen
-        //   decoration: BoxDecoration(
-        //     border: Border.all(color: Colors.grey), // Optional border
-        //     borderRadius: BorderRadius.circular(5), // Optional border radius
-        //   ),
-        //   margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        //   padding: const EdgeInsets.only(left: 10, right: 10),
-        //   child: DropdownButton<String>(
-        //     underline: Container(),
-        //     isExpanded: true, // Fill the width of the container
-        //     value: selectedDepartment,
-        //     onChanged: (String? newValue) {
-        //       if (newValue != null) {}
-        //     },
-        //     icon: Container(
-        //       decoration: const BoxDecoration(
-        //         border: Border(
-        //           left: BorderSide(
-        //             color: Colors.grey, // Border color
-        //             width: 2, // Border width
-        //           ),
-        //         ), // Optional border
-        //       ),
-        //       padding: const EdgeInsets.only(left: 5),
-        //       child: const Icon(IconData(0xf13d, fontFamily: 'MaterialIcons')),
-        //     ),
-        //     items: selectDepartments.map((String value) {
-        //       return DropdownMenuItem<String>(
-        //         value: value,
-        //         child: Text(value),
-        //       );
-        //     }).toList(),
-        //   ),
-        // ),
+        Container(
+          width: double.infinity, // Full width of the screen
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey), // Optional border
+            borderRadius: BorderRadius.circular(5), // Optional border radius
+          ),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: BlocConsumer<DepartmentBloc, DepartmentState>(
+            listener: (context, state) {
+              if (state.status == Progress.error) {
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
+              }
+            },
+            builder: (BuildContext context, DepartmentState state) {
+              if (state.status == Progress.loaded) {
+                return DropdownButton<Department>(
+                  underline: Container(),
+                  isExpanded: true, // Fill the width of the container
+                  value: state.selectedDepartment,
+                  onChanged: (Department? newValue) {
+                    if (newValue != null) {
+                      context
+                          .read<DepartmentBloc>()
+                          .add(SelectDepartment(selectedDepartment: newValue));
+                    }
+                  },
+                  icon: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          color: Colors.grey, // Border color
+                          width: 2, // Border width
+                        ),
+                      ), // Optional border
+                    ),
+                    padding: const EdgeInsets.only(left: 5),
+                    child: const Icon(
+                        IconData(0xf13d, fontFamily: 'MaterialIcons')),
+                  ),
+                  items: (state is DepartmentFilter
+                          ? state.filteredDepartments
+                          : state.departments)
+                      .map((Department department) {
+                    return DropdownMenuItem<Department>(
+                      key: Key(department.id.toString()),
+                      value: department,
+                      child: Text(department.name),
+                    );
+                  }).toList(),
+                );
+              } else {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: CustomColor.themeRed,
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
+        ),
         // Expanded(
         //   flex: 1,
         //   child: ListView.builder(

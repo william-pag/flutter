@@ -45,7 +45,6 @@ class StrategyBloc extends Bloc<StrategyEvent, StrategyState> {
           ),
         );
       } else {
-        await Future.delayed(const Duration(seconds: 5));
         emit(
           StrategyState(
             status: Progress.loaded,

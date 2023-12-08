@@ -5,12 +5,12 @@ import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/constants/constants.dart';
 import 'package:pag_flutter/screens/screens.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
   static const String routeName = '/login';
   static Route route() {
     return MaterialPageRoute(
-      builder: (BuildContext context) => const Login(),
+      builder: (BuildContext context) => const LoginScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
