@@ -25,7 +25,7 @@ class DepartmentService {
     }
   }
 
-  Future<ResponseDAO<List<String>>> getDeadlines({
+  Future<ResponseDAO<List<ResponseDeadline>>> getDeadlines({
     int stategyId = 0,
     int departmentId = 0,
   }) async {
@@ -41,7 +41,61 @@ class DepartmentService {
       );
     }
 
-    final List<GetAllDepartmentDeadlines> rawDeadlines = Deadlines.fromJson(response.data).data.getAllDepartments;
-    return ResponseDAO(hasError: false);
+    const List<ResponseDeadline> responseDeadline = <ResponseDeadline>[];
+
+    final List<GetAllDepartmentDeadlines> rawDeadlines =
+        Deadlines.fromJson(response.data).data.getAllDepartments;
+    for (var i = 0; i < rawDeadlines.length; i++) {
+      final GetAllDepartmentDeadlines deadlines = rawDeadlines[i];
+      final department = '${deadlines.strategy!.name} - ${deadlines.name}';
+      String deadlineLoc = 'Invalid Date';
+      if(deadlines.deadlineLoc != null) {
+        deadlineLoc = '${DateTime.now().difference(deadlines.deadlineLoc!).inDays} days';
+      }
+      responseDeadline.add(ResponseDeadline(
+        id: deadlines.id,
+        name: deadlines.name,
+        deadline: deadlineLoc,
+        department: department,
+        subDepartment: 'List Of Contributors',
+      ));
+      String deadlineConfirmLoc = 'Invalid Date';
+      if (deadlines.deadlineConfirmLoc != null) {
+        deadlineConfirmLoc =
+            '${DateTime.now().difference(deadlines.deadlineConfirmLoc!).inDays} days';
+      }
+      responseDeadline.add(ResponseDeadline(
+        id: deadlines.id,
+        name: deadlines.name,
+        deadline: deadlineConfirmLoc,
+        department: department,
+        subDepartment: 'Confirm LOC',
+      ));
+      String deadlineSelfAssessment = 'Invalid Date';
+      if (deadlines.deadlineConfirmLoc != null) {
+        deadlineConfirmLoc =
+            '${DateTime.now().difference(deadlines.deadlineSelfAssessment!).inDays} days';
+      }
+      responseDeadline.add(ResponseDeadline(
+        id: deadlines.id,
+        name: deadlines.name,
+        deadline: deadlineSelfAssessment,
+        department: department,
+        subDepartment: 'Self Assessment',
+      ));
+      String deadlinePerformanceEvaluation = 'Invalid Date';
+      if (deadlines.deadlineConfirmLoc != null) {
+        deadlineConfirmLoc =
+            '${DateTime.now().difference(deadlines.deadlinePerformanceEvaluation!).inDays} days';
+      }
+      responseDeadline.add(ResponseDeadline(
+        id: deadlines.id,
+        name: deadlines.name,
+        deadline: deadlinePerformanceEvaluation,
+        department: department,
+        subDepartment: 'Performance Evaluation',
+      ));
+    }
+    return ResponseDAO(hasError: false, data: responseDeadline);
   }
 }

@@ -23,7 +23,8 @@ class DataDeadlines {
 
   factory DataDeadlines.fromJson(Map<String, dynamic> json) => DataDeadlines(
         getAllDepartments: List<GetAllDepartmentDeadlines>.from(
-            json["getAllDepartments"].map((x) => GetAllDepartmentDeadlines.fromJson(x))),
+            json["getAllDepartments"]
+                .map((x) => GetAllDepartmentDeadlines.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -94,7 +95,8 @@ class StrategyDeadlines {
     required this.name,
   });
 
-  factory StrategyDeadlines.fromJson(Map<String, dynamic> json) => StrategyDeadlines(
+  factory StrategyDeadlines.fromJson(Map<String, dynamic> json) =>
+      StrategyDeadlines(
         id: json["id"],
         name: nameValues.map[json["name"]]!,
       );
@@ -124,4 +126,22 @@ class EnumValues<T> {
     reverseMap = map.map((k, v) => MapEntry(v, k));
     return reverseMap;
   }
+}
+
+class ResponseDeadline {
+  final int id;
+  final String name;
+  final String deadline;
+  final String department;
+  final String subDepartment;
+  StrategyDeadlines? strategy;
+
+  ResponseDeadline({
+    required this.id,
+    required this.name,
+    required this.deadline,
+    required this.department,
+    required this.subDepartment,
+    this.strategy,
+  });
 }
