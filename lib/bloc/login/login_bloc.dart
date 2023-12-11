@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/service/service.dart';
@@ -23,7 +21,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: event.email,
         password: event.password,
       );
-      await Future.delayed(const Duration(seconds: 1));
       emit(
         LoginState(
           email: state.email,

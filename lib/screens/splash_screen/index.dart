@@ -6,39 +6,23 @@ import 'package:pag_flutter/constants/colors.dart';
 import 'package:pag_flutter/screens/screens.dart';
 
 class SplashScreen extends StatelessWidget {
-  SplashScreen({super.key}) {
-    initData();
-  }
+  const SplashScreen({super.key});
   static const String routeName = '/';
   static Route route() {
     return MaterialPageRoute(
-      builder: (BuildContext context) => SplashScreen(),
+      builder: (BuildContext context) => const SplashScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
-  void initData() {
-    // SharedPreferences.getInstance().then((SharedPreferences store) {
-    //   String? token = store.getString('token');
-    //   if (token == null) {
-    //     if (kIsWeb) {
-    //       Get.toNamed('/login');
-    //     } else {
-    //       Get.to(Login());
-    //     }
-    //   }
-    // }, onError: (error) {
-    //   print([16, error.toString()]);
-    // });
+  void initData(BuildContext context) {
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Timer(
-      const Duration(seconds: 2),
-      () {
-        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-      },
-    );
+    initData(context);
     return Scaffold(
       backgroundColor: CustomColor.themeRed,
       body: Center(
