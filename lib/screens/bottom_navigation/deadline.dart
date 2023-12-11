@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pag_flutter/bloc/department/department_bloc.dart';
-import 'package:pag_flutter/bloc/strategy/strategy_bloc.dart';
+import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/config/config.dart';
 import 'package:pag_flutter/constants/constants.dart';
 import 'package:pag_flutter/model/model.dart';

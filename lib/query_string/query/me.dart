@@ -1,11 +1,11 @@
 String meStr() {
   return '''
-  query {
-    me {
-      id
-      name
-      image
+    query {
+      me {
+        id
+        name
+        image
+      }
     }
-  }
   ''';
 }
