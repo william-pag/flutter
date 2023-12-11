@@ -7,17 +7,7 @@ import 'package:pag_flutter/model/model.dart';
 import 'package:pag_flutter/screens/screens.dart';
 
 class Deadline extends StatelessWidget {
-  Deadline({super.key});
-
-  final List<String> selectDepartments = [
-    'Select Department',
-    'Select Department2',
-    'Select Department3'
-  ]; // List of dropdown items
-  final List<String> items = List.generate(
-      1000, (index) => 'Option Option Option Option Option Option $index');
-  final String selectedDepartment =
-      'Select Department'; // Default selected value
+  const Deadline({super.key});
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -29,25 +19,17 @@ class Deadline extends StatelessWidget {
           create: (BuildContext _) =>
               DepartmentBloc()..add(DepartmentLoading()),
         ),
+        BlocProvider(
+          create: (BuildContext _) => DeadlineBloc()..add(LoadingDeadline()),
+        ),
       ],
-      child: _Deadline(
-          selectedDepartment: selectedDepartment,
-          selectDepartments: selectDepartments,
-          items: items),
+      child: const _Deadline(),
     );
   }
 }
 
 class _Deadline extends StatelessWidget {
-  const _Deadline({
-    required this.selectedDepartment,
-    required this.selectDepartments,
-    required this.items,
-  });
-
-  final String selectedDepartment;
-  final List<String> selectDepartments;
-  final List<String> items;
+  const _Deadline();
 
   @override
   Widget build(BuildContext context) {
