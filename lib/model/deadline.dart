@@ -130,7 +130,7 @@ class EnumValues<T> {
 
 class ResponseDeadline {
   final int id;
-  final String name;
+  final String dateDeadline;
   final String deadline;
   final String department;
   final String subDepartment;
@@ -138,7 +138,7 @@ class ResponseDeadline {
 
   ResponseDeadline({
     required this.id,
-    required this.name,
+    required this.dateDeadline,
     required this.deadline,
     required this.department,
     required this.subDepartment,

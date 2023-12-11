@@ -14,8 +14,9 @@ class SplashScreen extends StatelessWidget {
       settings: const RouteSettings(name: routeName),
     );
   }
+
   void initData(BuildContext context) {
-    Future.delayed(const Duration(seconds: 5)).then((value) {
+    Future.delayed(const Duration(seconds: 1)).then((value) {
       Navigator.pushReplacementNamed(context, LoginScreen.routeName);
     });
   }

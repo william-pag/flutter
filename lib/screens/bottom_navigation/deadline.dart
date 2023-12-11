@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/config/config.dart';
 import 'package:pag_flutter/constants/constants.dart';
@@ -82,7 +83,10 @@ class _Deadline extends StatelessWidget {
                     return DropdownMenuItem<Strategy>(
                       key: Key(strategy.id.toString()),
                       value: strategy,
-                      child: Text(strategy.name),
+                      child: Text(
+                        strategy.name,
+                        style: const TextStyle(fontWeight: FontWeight.w400),
+                      ),
                     );
                   }).toList(),
                 );
@@ -151,7 +155,10 @@ class _Deadline extends StatelessWidget {
                     return DropdownMenuItem<Department>(
                       key: Key(department.id.toString()),
                       value: department,
-                      child: Text(department.name),
+                      child: Text(
+                        department.name,
+                        style: const TextStyle(fontWeight: FontWeight.w400),
+                      ),
                     );
                   }).toList(),
                 );
@@ -173,18 +180,112 @@ class _Deadline extends StatelessWidget {
             },
           ),
         ),
-        // Expanded(
-        //   flex: 1,
-        //   child: ListView.builder(
-        //     itemCount: items.length,
-        //     itemBuilder: (context, index) {
-        //       return ListTile(
-        //         title: Text(items[index]),
-        //       );
-        //     },
-        //   ),
-        // )
+        Expanded(
+          flex: 1,
+          child: BlocBuilder<DeadlineBloc, DeadlineState>(
+            builder: (BuildContext context, DeadlineState state) {
+              if (state.status == Progress.loaded) {
+                if (state.departmentId != 0 ||
+                    state.strategyId != 0 ||
+                    state.filteredDealines.isNotEmpty) {
+                  return ListView.builder(
+                    itemCount: state.filteredDealines.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(state.filteredDealines[index].department),
+                      );
+                    },
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: state.deadlines.length,
+                    itemBuilder: (context, index) {
+                      return BoxDeadline(deadline: state.deadlines[index]);
+                    },
+                  );
+                }
+              }
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: CustomColor.themeRed,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        )
       ],
+    );
+  }
+}
+
+class BoxDeadline extends StatelessWidget {
+  final ResponseDeadline deadline;
+  const BoxDeadline({
+    Key? key,
+    required this.deadline,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey),
+          left: BorderSide(color: Colors.grey),
+          right: BorderSide(color: Colors.grey),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            deadline.department,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blue[900],
+            ),
+          ),
+          Text(
+            deadline.subDepartment,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.teal[700],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                deadline.deadline,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.red[800],
+                ),
+              ),
+              Text(
+                deadline.dateDeadline,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.red[800],
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

@@ -142,7 +142,7 @@ class _LoginContent extends StatelessWidget {
               builder: (BuildContext context, LoginState state) {
                 if (state.btnSignIn == LoginBtnStatus.loading) {
                   return const SizedBox(
-                    width: 100,
+                    width: 150,
                     height: 30,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
