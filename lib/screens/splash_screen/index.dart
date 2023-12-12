@@ -18,6 +18,7 @@ class SplashScreen extends StatelessWidget {
 
   Future<bool> checkAuth() async {
     final token = await LocalStorage.shard.getValue(key: 'token');
+    print([21, token]);
     if (token == null) {
       return false;
     } else {
@@ -28,6 +29,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((_) {
+      checkAuth();
       Navigator.of(context).pushNamed(LoginScreen.routeName);
     });
     return Scaffold(

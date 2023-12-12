@@ -20,7 +20,10 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
 
       if (token == null) {
         emit(const TokenState(
-            isAuthorized: false, token: '', status: Progress.loaded));
+          isAuthorized: false,
+          token: null,
+          status: Progress.loaded,
+        ));
       } else {
         HttpClient.shard.token = token;
       }
