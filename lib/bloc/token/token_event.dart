@@ -1,8 +1,10 @@
 part of 'token_bloc.dart';
 
-sealed class TokenEvent extends Equatable {
+abstract class TokenEvent extends Equatable {
   const TokenEvent();
 
   @override
   List<Object> get props => [];
 }
+
+final class LoadToken extends TokenEvent {}

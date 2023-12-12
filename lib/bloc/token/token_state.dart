@@ -1,13 +1,17 @@
 part of 'token_bloc.dart';
 
 class TokenState extends Equatable {
-  final String token;
-  const TokenState({required this.token});
-  
+  final bool isAuthorized;
+  final Progress status;
+  final String? token;
+  const TokenState(
+      {required this.isAuthorized, required this.token, required this.status});
+
   @override
-  List<Object> get props => [token];
+  List<Object?> get props => [token, status, isAuthorized];
 }
 
-final class TokenInitial extends TokenState {
-  const TokenInitial() : super(token: '');
+final class TokenLoading extends TokenState {
+  const TokenLoading()
+      : super(token: null, status: Progress.loading, isAuthorized: false);
 }

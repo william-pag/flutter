@@ -17,6 +17,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
             ],
             selectedDepartment:
                 Department(id: 0, name: 'All Departments', strategy: null),
+            strategyId: 0,
           ),
         ) {
     on<DepartmentLoading>((
@@ -26,6 +27,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       emit(
         DepartmentState(
           status: Progress.loading,
+          strategyId: 0,
           departments: state.departments,
           selectedDepartment: state.departments[0],
         ),
@@ -34,6 +36,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       if (response.hasError) {
         emit(
           DepartmentState(
+            strategyId: 0,
             status: Progress.error,
             departments: state.departments,
             selectedDepartment: state.departments[0],
@@ -42,6 +45,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       } else {
         emit(
           DepartmentState(
+            strategyId: 0,
             status: Progress.loaded,
             departments: response.data!,
             selectedDepartment: response.data!.first,
@@ -56,6 +60,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
     ) async {
       emit(
         DepartmentState(
+          strategyId: state.strategyId,
           status: Progress.loaded,
           departments: state.departments,
           selectedDepartment: event.selectedDepartment,
@@ -68,23 +73,34 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       Emitter<DepartmentState> emit,
     ) async {
       if (event.strategy.id != 0) {
-        final filteredDepartments =
-            state.departments.where((Department depart) {
-          return depart.id == 0 || depart.strategy?.id == event.strategy.id;
-        }).toList();
-
-        emit(
-          DepartmentFilter(
-            status: Progress.loaded,
-            departments: state.departments,
-            selectedDepartment: filteredDepartments[0],
-            filteredDepartments: filteredDepartments,
-          ),
+        final response = await DepartmentService.shard.getDepartments(
+          strategyId: event.strategy.id,
         );
+
+        if (response.hasError) {
+          emit(
+            DepartmentState(
+              strategyId: 0,
+              status: Progress.error,
+              departments: state.departments,
+              selectedDepartment: state.departments[0],
+            ),
+          );
+        } else {
+          emit(
+            DepartmentState(
+              strategyId: event.strategy.id,
+              status: Progress.loaded,
+              departments: response.data!,
+              selectedDepartment: response.data!.first,
+            ),
+          );
+        }
       } else {
         emit(
           DepartmentState(
             status: Progress.loaded,
+            strategyId: 0,
             departments: state.departments,
             selectedDepartment: state.departments[0],
           ),

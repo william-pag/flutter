@@ -21,7 +21,7 @@ class Deadline extends StatelessWidget {
               DepartmentBloc()..add(DepartmentLoading()),
         ),
         BlocProvider(
-          create: (BuildContext _) => DeadlineBloc()..add(LoadingDeadline()),
+          create: (BuildContext _) => DeadlineBloc()..add(LoadDeadline()),
         ),
       ],
       child: const _Deadline(),
@@ -64,6 +64,9 @@ class _Deadline extends StatelessWidget {
                       context
                           .read<DepartmentBloc>()
                           .add(FilterDepartments(strategy: newValue));
+                      context
+                          .read<DeadlineBloc>()
+                          .add(FilterDeadline(strategyId: newValue.id));
                     }
                   },
                   icon: Container(
@@ -133,6 +136,10 @@ class _Deadline extends StatelessWidget {
                       context
                           .read<DepartmentBloc>()
                           .add(SelectDepartment(selectedDepartment: newValue));
+                      context.read<DeadlineBloc>().add(FilterDeadline(
+                            strategyId: state.strategyId,
+                            departmentId: newValue.id,
+                          ));
                     }
                   },
                   icon: Container(
@@ -148,10 +155,7 @@ class _Deadline extends StatelessWidget {
                     child: const Icon(
                         IconData(0xf13d, fontFamily: 'MaterialIcons')),
                   ),
-                  items: (state is DepartmentFilter
-                          ? state.filteredDepartments
-                          : state.departments)
-                      .map((Department department) {
+                  items: state.departments.map((Department department) {
                     return DropdownMenuItem<Department>(
                       key: Key(department.id.toString()),
                       value: department,
@@ -182,28 +186,22 @@ class _Deadline extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: BlocBuilder<DeadlineBloc, DeadlineState>(
+          child: BlocConsumer<DeadlineBloc, DeadlineState>(
+            listener: (context, state) {
+              if (state.status == Progress.error) {
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
+              }
+            },
             builder: (BuildContext context, DeadlineState state) {
               if (state.status == Progress.loaded) {
-                if (state.departmentId != 0 ||
-                    state.strategyId != 0 ||
-                    state.filteredDealines.isNotEmpty) {
-                  return ListView.builder(
-                    itemCount: state.filteredDealines.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(state.filteredDealines[index].department),
-                      );
-                    },
-                  );
-                } else {
-                  return ListView.builder(
-                    itemCount: state.deadlines.length,
-                    itemBuilder: (context, index) {
-                      return BoxDeadline(deadline: state.deadlines[index]);
-                    },
-                  );
-                }
+                return ListView.builder(
+                  itemCount: state.deadlines.length,
+                  itemBuilder: (context, index) {
+                    return BoxDeadline(deadline: state.deadlines[index]);
+                  },
+                  addAutomaticKeepAlives: false,
+                  addRepaintBoundaries: false,
+                );
               }
               return const Center(
                 child: Padding(

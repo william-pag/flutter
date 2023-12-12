@@ -7,4 +7,11 @@ class DeadlineEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadingDeadline extends DeadlineEvent {}
+class LoadDeadline extends DeadlineEvent {}
+
+class FilterDeadline extends DeadlineEvent {
+  final int strategyId;
+  final int departmentId;
+
+  const FilterDeadline({this.strategyId = 0, this.departmentId = 0});
+}

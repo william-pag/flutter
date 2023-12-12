@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pag_flutter/constants/colors.dart';
 import 'package:pag_flutter/screens/screens.dart';
+import 'package:pag_flutter/service/shared_preferences/index.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -15,15 +16,20 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  void initData(BuildContext context) {
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-    });
+  Future<bool> checkAuth() async {
+    final token = await LocalStorage.shard.getValue(key: 'token');
+    if (token == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    initData(context);
+    Future.delayed(const Duration(seconds: 3)).then((_) {
+      Navigator.of(context).pushNamed(LoginScreen.routeName);
+    });
     return Scaffold(
       backgroundColor: CustomColor.themeRed,
       body: Center(

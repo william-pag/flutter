@@ -9,18 +9,38 @@ part 'deadline_state.dart';
 
 class DeadlineBloc extends Bloc<DeadlineEvent, DeadlineState> {
   DeadlineBloc() : super(const DeadlineLoading()) {
-    on<LoadingDeadline>((
-      LoadingDeadline event,
+    on<LoadDeadline>((
+      LoadDeadline event,
       Emitter<DeadlineState> emit,
     ) async {
       emit(const DeadlineLoading());
-      final deadlines = await DepartmentService.shard.getDeadlines();
+      final response = await DepartmentService.shard.getDeadlines();
+      if (response.hasError) {
+        emit(const DeadlineError());
+      } else {
+        emit(DeadlineLoaded(
+          status: Progress.loaded,
+          deadlines: response.data!,
+          strategyId: 0,
+          departmentId: 0,
+        ));
+      }
+    });
+
+    on<FilterDeadline>((
+      FilterDeadline event,
+      Emitter<DeadlineState> emit,
+    ) async {
+      emit(const DeadlineLoading());
+      final deadlines = await DepartmentService.shard.getDeadlines(
+        stategyId: event.strategyId,
+        departmentId: event.departmentId,
+      );
       emit(DeadlineLoaded(
         status: Progress.loaded,
         deadlines: deadlines.data!,
         strategyId: 0,
         departmentId: 0,
-        filteredDealines: state.filteredDealines,
       ));
     });
   }

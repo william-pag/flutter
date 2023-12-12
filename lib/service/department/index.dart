@@ -1,14 +1,15 @@
 import 'package:intl/intl.dart';
 import 'package:pag_flutter/config/config.dart';
 import 'package:pag_flutter/model/model.dart';
-import 'package:pag_flutter/query_string/query/get_deadline.dart';
 import 'package:pag_flutter/query_string/query/query.dart';
 
 class DepartmentService {
   static final shard = DepartmentService();
 
-  Future<ResponseDAO<List<Department>>> getDepartments() async {
-    final String queryStr = getDepartmentsStr();
+  Future<ResponseDAO<List<Department>>> getDepartments({
+    int strategyId = 0,
+  }) async {
+    final String queryStr = getDepartmentsStr(strategyId: strategyId);
     final response = await HttpClient.shard.query(queryStr);
     if (response.hasError) {
       return ResponseDAO(
