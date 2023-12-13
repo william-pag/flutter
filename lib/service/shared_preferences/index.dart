@@ -29,4 +29,12 @@ class LocalStorage {
 
     return pref.getString(key);
   }
+
+  Future<bool> removeValue({required String key}) async {
+    if (_instance == null) {
+      await _getInstance();
+    }
+
+    return pref.remove(key);
+  }
 }

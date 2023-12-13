@@ -1,25 +1,39 @@
+import 'package:pag_flutter/bloc/bloc.dart';
+import 'package:pag_flutter/config/config.dart';
 import 'package:pag_flutter/model/model.dart';
 import 'package:pag_flutter/query_string/mutation/mutation.dart';
-import 'package:pag_flutter/config/http.dart';
+import 'package:pag_flutter/query_string/query/me.dart';
 import 'package:pag_flutter/service/shared_preferences/index.dart';
 
 class UserService {
   static final shared = UserService();
 
-  Future<String> login({
+  Future<bool> login({
     required String email,
     required String password,
   }) async {
     final String strLogin = loginStr(email: email, password: password);
     final response = await HttpClient.shard.query(strLogin);
     if (response.hasError) {
-      return '';
+      return false;
     } else {
       final loginToken = LoginModel.fromJson(response.data);
       final token = loginToken.data.login.accessToken;
       HttpClient.shard.token = token;
-      LocalStorage.shard.setValue(key: 'token', value: token);
-      return token;
+      TokenState(isAuthorized: true, token: token, status: Progress.loaded);
+      await LocalStorage.shard.setValue(key: 'token', value: token);
+      return true;
+    }
+  }
+  Future<ResponseDAO<String>> me() async {
+    final String strLogin = meStr();
+    final response = await HttpClient.shard.query(strLogin);
+    if (response.hasError) {
+      HttpClient.shard.token = '';
+      await LocalStorage.shard.removeValue(key: 'token');
+      return ResponseDAO(hasError: true, error: response.error);
+    } else {
+      return ResponseDAO(hasError: false);
     }
   }
 }
