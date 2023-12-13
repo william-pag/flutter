@@ -12,12 +12,15 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
   TokenBloc() : super(const TokenLoading()) {
     on<LoadToken>((LoadToken event, Emitter<TokenState> emit) async {
       emit(const TokenLoading());
+      await Future.delayed(const Duration(seconds: 2));
       String? token;
       if (kIsWeb) {
         token = await LocalStorage.shard.getValue(key: 'token');
       } else {
         token = state.token;
       }
+
+      print([22, token]);
 
       if (token == null) {
         emit(const TokenState(
@@ -26,6 +29,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
           status: Progress.loaded,
         ));
       } else {
+        HttpClient.shard.token = token;
         final response = await UserService.shared.me();
         if (response.hasError) {
           emit(const TokenState(

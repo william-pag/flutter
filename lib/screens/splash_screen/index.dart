@@ -18,16 +18,34 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => TokenBloc()..add(LoadToken()),
+      child: const _SplashContent(routeName: routeName),
+    );
+  }
+}
+
+class _SplashContent extends StatelessWidget {
+  const _SplashContent({
+    required this.routeName,
+  });
+
+  final String routeName;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColor.themeRed,
       body: BlocConsumer<TokenBloc, TokenState>(
         listener: (context, state) {
-          if ((state.status == Progress.loaded || state.status == Progress.error) && !state.isAuthorized) {
+          if ((state.status == Progress.loaded ||
+                  state.status == Progress.error) &&
+              !state.isAuthorized) {
             Navigator.of(context).pushNamed(LoginScreen.routeName);
           }
 
           if (state.status == Progress.loaded && state.isAuthorized) {
-            Navigator.of(context).pushNamed(SplashScreen.routeName);
+            Navigator.of(context).pushNamed(BottomMenu.routeName);
           }
         },
         builder: (context, state) {
