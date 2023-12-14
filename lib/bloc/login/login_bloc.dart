@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pag_flutter/service/service.dart';
+import 'package:pag_flutter/service/service.dart' show UserService;
 
 part 'login_event.dart';
 part 'login_state.dart';

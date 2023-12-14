@@ -79,8 +79,7 @@ class _Deadline extends StatelessWidget {
                       ), // Optional border
                     ),
                     padding: const EdgeInsets.only(left: 5),
-                    child: const Icon(
-                        IconData(0xf13d, fontFamily: 'MaterialIcons')),
+                    child: CustomIcons.shared.caretDown,
                   ),
                   items: state.strategies.map((Strategy strategy) {
                     return DropdownMenuItem<Strategy>(
@@ -117,7 +116,7 @@ class _Deadline extends StatelessWidget {
             border: Border.all(color: Colors.grey), // Optional border
             borderRadius: BorderRadius.circular(5), // Optional border radius
           ),
-          margin: const EdgeInsets.all(10),
+          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: BlocConsumer<DepartmentBloc, DepartmentState>(
             listener: (context, state) {
@@ -152,8 +151,7 @@ class _Deadline extends StatelessWidget {
                       ), // Optional border
                     ),
                     padding: const EdgeInsets.only(left: 5),
-                    child: const Icon(
-                        IconData(0xf13d, fontFamily: 'MaterialIcons')),
+                    child: CustomIcons.shared.caretDown,
                   ),
                   items: state.departments.map((Department department) {
                     return DropdownMenuItem<Department>(

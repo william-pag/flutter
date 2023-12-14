@@ -2,7 +2,7 @@ import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/config/config.dart';
 import 'package:pag_flutter/model/model.dart';
 import 'package:pag_flutter/query_string/mutation/mutation.dart';
-import 'package:pag_flutter/query_string/query/me.dart';
+import 'package:pag_flutter/query_string/query/query.dart';
 import 'package:pag_flutter/service/shared_preferences/index.dart';
 
 class UserService {
@@ -25,6 +25,7 @@ class UserService {
       return true;
     }
   }
+
   Future<ResponseDAO<String>> me() async {
     final String strLogin = meStr();
     final response = await HttpClient.shard.query(strLogin);
@@ -34,6 +35,27 @@ class UserService {
       return ResponseDAO(hasError: true, error: response.error);
     } else {
       return ResponseDAO(hasError: false);
+    }
+  }
+
+  Future<ResponseDAO<List<UserModel>>> getAllUsers({
+    required String token,
+  }) async {
+    final String strUsers = getAllUsersStr();
+    HttpClient.shard.token = token;
+    final response = await HttpClient.shard.query(strUsers);
+    if (response.hasError) {
+      return ResponseDAO(hasError: true, error: response.error);
+    } else {
+      final users = List<UserModel>.from(
+        UsersModel.fromJson(
+          response.data,
+        ).data.getAllUsers,
+      )..insert(
+          0,
+          UserModel(id: 0, name: 'All'),
+        );
+      return ResponseDAO(hasError: false, data: users);
     }
   }
 }

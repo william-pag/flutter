@@ -7,9 +7,11 @@ class DepartmentService {
   static final shard = DepartmentService();
 
   Future<ResponseDAO<List<Department>>> getDepartments({
+    required String token,
     int strategyId = 0,
   }) async {
     final String queryStr = getDepartmentsStr(strategyId: strategyId);
+    HttpClient.shard.token = token;
     final response = await HttpClient.shard.query(queryStr);
     if (response.hasError) {
       return ResponseDAO(
@@ -28,6 +30,7 @@ class DepartmentService {
   }
 
   Future<ResponseDAO<List<ResponseDeadline>>> getDeadlines({
+    required String token,
     int stategyId = 0,
     int departmentId = 0,
   }) async {
@@ -35,6 +38,7 @@ class DepartmentService {
       stategyId: stategyId,
       departmentId: departmentId,
     );
+    HttpClient.shard.token = token;
     final response = await HttpClient.shard.query(queryStr);
     if (response.hasError) {
       return ResponseDAO(

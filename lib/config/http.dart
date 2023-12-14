@@ -9,6 +9,8 @@ class HttpClient {
   String _token = '';
   final String urlStr = 'http://103.81.85.228:5000/graphql';
 
+  String get token => _token;
+
   set token(String value) => _token = value;
 
   Future<ResponseType> query(String str) async {

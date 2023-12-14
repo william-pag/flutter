@@ -5,8 +5,10 @@ import 'package:pag_flutter/query_string/query/query.dart';
 class StrategyService {
   static final shard = StrategyService();
 
-  Future<ResponseDAO<List<Strategy>>> getAllStrategies() async {
+  Future<ResponseDAO<List<Strategy>>> getAllStrategies(
+      {required String token}) async {
     final String queryStr = getAllStategiesStr();
+    HttpClient.shard.token = token;
     final response = await HttpClient.shard.query(queryStr);
     if (response.hasError) {
       return ResponseDAO(

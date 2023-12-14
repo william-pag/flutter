@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pag_flutter/config/config.dart';
-import 'package:pag_flutter/model/model.dart';
-import 'package:pag_flutter/service/service.dart';
+import 'package:pag_flutter/config/config.dart' show Progress, HttpClient;
+import 'package:pag_flutter/model/model.dart' show Department, Strategy;
+import 'package:pag_flutter/service/service.dart' show DepartmentService;
 
 part 'department_event.dart';
 part 'department_state.dart';
@@ -32,7 +33,12 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
           selectedDepartment: state.departments[0],
         ),
       );
-      final response = await DepartmentService.shard.getDepartments();
+      final response = await compute(
+        (String token) {
+          return DepartmentService.shard.getDepartments(token: token);
+        },
+        HttpClient.shard.token,
+      );
       if (response.hasError) {
         emit(
           DepartmentState(
@@ -73,8 +79,14 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       Emitter<DepartmentState> emit,
     ) async {
       if (event.strategy.id != 0) {
-        final response = await DepartmentService.shard.getDepartments(
-          strategyId: event.strategy.id,
+        final response = await compute(
+          (String token) {
+            return DepartmentService.shard.getDepartments(
+              token: token,
+              strategyId: event.strategy.id,
+            );
+          },
+          HttpClient.shard.token,
         );
 
         if (response.hasError) {

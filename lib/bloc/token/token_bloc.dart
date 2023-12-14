@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pag_flutter/config/config.dart';
+import 'package:pag_flutter/config/config.dart' show Progress, HttpClient;
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:pag_flutter/service/service.dart';
-import 'package:pag_flutter/service/shared_preferences/index.dart';
+import 'package:pag_flutter/service/service.dart' show UserService;
+import 'package:pag_flutter/service/shared_preferences/index.dart'
+    show LocalStorage;
 
 part 'token_event.dart';
 part 'token_state.dart';
@@ -19,8 +20,6 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
       } else {
         token = state.token;
       }
-
-      print([22, token]);
 
       if (token == null) {
         emit(const TokenState(
