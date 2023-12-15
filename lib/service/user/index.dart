@@ -26,7 +26,7 @@ class UserService {
     }
   }
 
-  Future<ResponseDAO<String>> me() async {
+  Future<ResponseDAO<MeClass>> me() async {
     final String strLogin = meStr();
     final response = await HttpClient.shard.query(strLogin);
     if (response.hasError) {
@@ -34,7 +34,8 @@ class UserService {
       await LocalStorage.shard.removeValue(key: 'token');
       return ResponseDAO(hasError: true, error: response.error);
     } else {
-      return ResponseDAO(hasError: false);
+      final data = MeModel.fromJson(response.data).data.me;
+      return ResponseDAO(hasError: false, data: data);
     }
   }
 

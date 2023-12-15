@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/config/config.dart' show Progress, HttpClient;
 import 'package:pag_flutter/model/model.dart' show Department, Strategy;
+import 'package:pag_flutter/model/pair.dart';
 import 'package:pag_flutter/service/service.dart' show DepartmentService;
 
 part 'department_event.dart';
@@ -78,15 +79,18 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       FilterDepartments event,
       Emitter<DepartmentState> emit,
     ) async {
-      if (event.strategy.id != 0) {
+      if (event.strategyId != 0) {
         final response = await compute(
-          (String token) {
+          (Pair<String, int> args) {
             return DepartmentService.shard.getDepartments(
-              token: token,
-              strategyId: event.strategy.id,
+              token: args.first,
+              strategyId: args.second,
             );
           },
-          HttpClient.shard.token,
+          Pair(
+            HttpClient.shard.token,
+            event.strategyId,
+          ),
         );
 
         if (response.hasError) {
@@ -101,7 +105,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
         } else {
           emit(
             DepartmentState(
-              strategyId: event.strategy.id,
+              strategyId: event.strategyId,
               status: Progress.loaded,
               departments: response.data!,
               selectedDepartment: response.data!.first,

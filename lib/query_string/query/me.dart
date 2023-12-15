@@ -5,6 +5,7 @@ String meStr() {
         id
         name
         image
+        email
       }
     }
   ''';

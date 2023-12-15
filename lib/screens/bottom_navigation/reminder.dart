@@ -2,20 +2,13 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pag_flutter/bloc/bloc.dart'
-    show
-        UsersBloc,
-        UsersState,
-        SelectUser,
-        UsersLoading,
-        NotificationLogBloc,
-        LoadNotificationLog,
-        NotificationLogState;
-import 'package:pag_flutter/config/config.dart' show Progress;
-import 'package:pag_flutter/constants/constants.dart'
-    show CustomColor, CustomIcons;
-import 'package:pag_flutter/model/model.dart' show UserModel, NotificationLog;
-import 'package:pag_flutter/screens/screens.dart' show LoginScreen;
+import 'package:pag_flutter/bloc/notification_log/notification_log_bloc.dart';
+import 'package:pag_flutter/bloc/users/users_bloc.dart';
+import 'package:pag_flutter/components/dropdown_select/all_users.dart';
+import 'package:pag_flutter/components/loading.dart';
+import 'package:pag_flutter/config/enum.dart';
+import 'package:pag_flutter/model/notification_log.dart';
+import 'package:pag_flutter/model/user.dart';
 
 class Reminder extends StatelessWidget {
   const Reminder({super.key});
@@ -28,11 +21,9 @@ class Reminder extends StatelessWidget {
           create: (BuildContext _) => UsersBloc()..add(UsersLoading()),
         ),
         BlocProvider(
-          create: (BuildContext _) => NotificationLogBloc()
-            ..add(
-              LoadNotificationLog(),
-            ),
-        ),
+          create: (BuildContext _) =>
+              NotificationLogBloc()..add(LoadNotificationLog()),
+        )
       ],
       child: const _Reminder(),
     );
@@ -46,71 +37,12 @@ class _Reminder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: double.infinity, // Full width of the screen
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey), // Optional border
-            borderRadius: BorderRadius.circular(5), // Optional border radius
-          ),
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: BlocConsumer<UsersBloc, UsersState>(
-            listener: (context, state) {
-              if (state.status == Progress.error) {
-                Navigator.of(context).pushNamed(LoginScreen.routeName);
-              }
-            },
-            builder: (BuildContext context, UsersState state) {
-              if (state.status == Progress.loaded) {
-                return DropdownButton<UserModel>(
-                  underline: Container(),
-                  isExpanded: true, // Fill the width of the container
-                  value: state.selectedUser,
-                  onChanged: (UserModel? newValue) {
-                    if (newValue != null) {
-                      context.read<UsersBloc>().add(SelectUser(user: newValue));
-                    }
-                  },
-                  icon: Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          color: Colors.grey, // Border color
-                          width: 2, // Border width
-                        ),
-                      ), // Optional border
-                    ),
-                    padding: const EdgeInsets.only(left: 5),
-                    child: CustomIcons.shared.caretDown,
-                  ),
-                  items: state.users.map((UserModel user) {
-                    return DropdownMenuItem<UserModel>(
-                      key: Key(user.id.toString()),
-                      value: user,
-                      child: Text(
-                        user.name,
-                        style: const TextStyle(fontWeight: FontWeight.w400),
-                      ),
-                    );
-                  }).toList(),
+        DropdownSelectAllUsers(
+          onChangeValue: (UserModel user) {
+            context.read<NotificationLogBloc>().add(
+                  FilterNotificationLog(user: user),
                 );
-              } else {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: CustomColor.themeRed,
-                        strokeWidth: 2,
-                      ),
-                    ),
-                  ),
-                );
-              }
-            },
-          ),
+          },
         ),
         Expanded(
           flex: 1,
@@ -121,25 +53,17 @@ class _Reminder extends StatelessWidget {
                 return ListView.builder(
                   itemCount: state.notiLogs.length,
                   itemBuilder: (context, index) {
-                    return _BoxReminder(notiLog: state.notiLogs[index]);
+                    return _BoxReminder(
+                      notiLog: state.notiLogs[index],
+                      index: index,
+                    );
                   },
                   addAutomaticKeepAlives: false,
                   addRepaintBoundaries: false,
                 );
               }
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: CustomColor.themeRed,
-                      strokeWidth: 2,
-                    ),
-                  ),
-                ),
-              );
+
+              return const Loading();
             },
           ),
         ),
@@ -149,22 +73,26 @@ class _Reminder extends StatelessWidget {
 }
 
 class _BoxReminder extends StatelessWidget {
+  final int index;
+  final NotificationLog notiLog;
   const _BoxReminder({
     required this.notiLog,
+    required this.index,
   });
-
-  final NotificationLog notiLog;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: Colors.grey),
-          left: BorderSide(color: Colors.grey),
-          right: BorderSide(color: Colors.grey),
+          top: index == 0
+              ? const BorderSide(color: Colors.grey)
+              : BorderSide.none,
+          left: const BorderSide(color: Colors.grey),
+          right: const BorderSide(color: Colors.grey),
+          bottom: const BorderSide(color: Colors.grey),
         ),
       ),
       child: Column(

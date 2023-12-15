@@ -26,10 +26,10 @@ final class SelectDepartment extends DepartmentEvent {
 }
 
 final class FilterDepartments extends DepartmentEvent {
-  final Strategy strategy;
+  final int strategyId;
 
-  FilterDepartments({required this.strategy});
+  FilterDepartments({required this.strategyId});
 
   @override
-  List<Object?> get props => [strategy];
+  List<Object?> get props => [strategyId];
 }

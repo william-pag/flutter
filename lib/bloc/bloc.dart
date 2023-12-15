@@ -5,3 +5,4 @@ export 'deadline/deadline_bloc.dart';
 export 'token/token_bloc.dart';
 export 'users/users_bloc.dart';
 export 'notification_log/notification_log_bloc.dart';
+export 'me/me_bloc.dart';

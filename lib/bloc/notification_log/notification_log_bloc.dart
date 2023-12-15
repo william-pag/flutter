@@ -38,5 +38,40 @@ class NotificationLogBloc
         );
       }
     });
+
+    on<FilterNotificationLog>((
+      FilterNotificationLog event,
+      Emitter<NotificationLogState> emit,
+    ) async {
+      emit(const NotificationLogInitial());
+
+      final response = await compute(
+        (Pair<String, int> args) {
+          return ReminderService.shared.getReminders(
+            token: args.first,
+            userId: args.second,
+          );
+        },
+        Pair<String, int>(
+          HttpClient.shard.token,
+          event.user.id,
+        ),
+      );
+      if (response.hasError || response.data == null) {
+        emit(
+          const NotificationLogState(
+            status: Progress.error,
+            notiLogs: <NotificationLog>[],
+          ),
+        );
+      } else {
+        emit(
+          NotificationLogState(
+            status: Progress.loaded,
+            notiLogs: response.data!,
+          ),
+        );
+      }
+    });
   }
 }

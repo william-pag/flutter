@@ -33,27 +33,27 @@ class MeData {
 class MeClass {
   int id;
   String name;
-  String image;
   String email;
+  String image;
 
   MeClass({
     required this.id,
     required this.name,
-    required this.image,
     required this.email,
+    required this.image,
   });
 
   factory MeClass.fromJson(Map<String, dynamic> json) => MeClass(
         id: json["id"],
         name: json["name"],
-        image: json["image"],
         email: json["email"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "image": image,
         "email": email,
+        "image": image,
       };
 }
