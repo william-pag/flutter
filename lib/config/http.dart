@@ -6,21 +6,17 @@ import 'package:pag_flutter/model/model.dart';
 
 class HttpClient {
   static final shard = HttpClient();
-  String _token = '';
-  final String urlStr = 'http://103.81.85.228:5000/graphql';
-
-  String get token => _token;
-
-  set token(String value) => _token = value;
+  String token = '';
+  final String _urlStr = 'http://103.81.85.228:5000/graphql';
 
   Future<ResponseType> query(String str) async {
     final data = await http.post(
-      Uri.parse(urlStr),
+      Uri.parse(_urlStr),
       body: {
         'query': str,
       },
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer $_token',
+        HttpHeaders.authorizationHeader: 'Bearer $token',
       },
     );
     final response = jsonDecode(data.body);

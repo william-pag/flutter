@@ -7,3 +7,4 @@ export 'deadline.dart';
 export 'user.dart';
 export 'triple.dart';
 export 'pair.dart';
+export 'notification_log.dart';
