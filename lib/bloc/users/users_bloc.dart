@@ -18,7 +18,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       ));
       final response = await compute(
         (String token) {
-          return UserService.shared.getAllUsers(token: token);
+          return UserService.shared.getListSelectingUsers(token: token);
         },
         HttpClient.shard.token,
       );

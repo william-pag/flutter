@@ -39,10 +39,10 @@ class UserService {
     }
   }
 
-  Future<ResponseDAO<List<UserModel>>> getAllUsers({
+  Future<ResponseDAO<List<UserModel>>> getListSelectingUsers({
     required String token,
   }) async {
-    final String strUsers = getAllUsersStr();
+    final String strUsers = UserQueryString.shared.getListSelectingUsers();
     HttpClient.shard.token = token;
     final response = await HttpClient.shard.query(strUsers);
     if (response.hasError) {
@@ -57,6 +57,40 @@ class UserService {
           UserModel(id: 0, name: 'All'),
         );
       return ResponseDAO(hasError: false, data: users);
+    }
+  }
+
+  Future<ResponseDAO<List<SummaryUser>>> getListSummaryUsers({
+    required String token,
+  }) async {
+    final String strUsers = UserQueryString.shared.getListSummaryUsers();
+    HttpClient.shard.token = token;
+    final response = await HttpClient.shard.query(strUsers);
+    if (response.hasError) {
+      return ResponseDAO(hasError: true, error: response.error);
+    } else {
+      return ResponseDAO(
+        hasError: false,
+        data: SummaryUsers.fromJson(response.data).data.getAllUsers,
+      );
+    }
+  }
+
+  Future<ResponseDAO<DetailUser>> getDetailedUser({
+    required String token,
+    required int userId,
+  }) async {
+    final String strUsers =
+        UserQueryString.shared.getDetailedUser(userId: userId);
+    HttpClient.shard.token = token;
+    final response = await HttpClient.shard.query(strUsers);
+    if (response.hasError) {
+      return ResponseDAO(hasError: true, error: response.error);
+    } else {
+      return ResponseDAO(
+        hasError: false,
+        data: GetDetailUser.fromJson(response.data).data.getOneUser,
+      );
     }
   }
 }

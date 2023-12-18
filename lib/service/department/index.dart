@@ -59,7 +59,7 @@ class DepartmentService {
     for (var i = 0; i < rawDeadlines.length; i++) {
       final GetAllDepartmentDeadlines deadlines = rawDeadlines[i];
       final department =
-          '${deadlines.strategy?.name != null ? nameValues.reverse[deadlines.strategy?.name] : 'Deadline'} - ${deadlines.name}';
+          '${deadlines.strategy?.name != null ? nameValuesDeadline.reverse[deadlines.strategy?.name] : 'Deadline'} - ${deadlines.name}';
       String deadlineLoc = 'Overdue';
       String dateLoc = 'Invalid Date';
       if (deadlines.deadlineLoc != null) {

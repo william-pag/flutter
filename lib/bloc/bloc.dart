@@ -6,3 +6,4 @@ export 'token/token_bloc.dart';
 export 'users/users_bloc.dart';
 export 'notification_log/notification_log_bloc.dart';
 export 'me/me_bloc.dart';
+export 'summary_users/summary_users_bloc.dart';

@@ -3,6 +3,7 @@ import 'package:pag_flutter/constants/colors.dart';
 import 'package:pag_flutter/items/app_bar.dart';
 import 'package:pag_flutter/screens/bottom_navigation/deadline.dart';
 import 'package:pag_flutter/screens/bottom_navigation/home.dart';
+import 'package:pag_flutter/screens/bottom_navigation/list_users.dart';
 import 'package:pag_flutter/screens/bottom_navigation/reminder.dart';
 
 class BottomMenu extends StatelessWidget {
@@ -37,7 +38,7 @@ class _MenuPageState extends State<MenuPage> {
     const Home(),
     const Deadline(),
     const Reminder(),
-    const Text('Profile Page'),
+    const ListOfUsers(),
     const Text('Profile2 Page'),
   ];
 

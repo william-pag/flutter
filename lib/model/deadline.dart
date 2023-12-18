@@ -1,3 +1,5 @@
+import 'package:pag_flutter/model/model.dart' show EnumValues;
+
 class Deadlines {
   DataDeadlines data;
 
@@ -88,7 +90,7 @@ class GetAllDepartmentDeadlines {
 
 class StrategyDeadlines {
   int id;
-  Name name;
+  NameStrategy name;
 
   StrategyDeadlines({
     required this.id,
@@ -98,35 +100,23 @@ class StrategyDeadlines {
   factory StrategyDeadlines.fromJson(Map<String, dynamic> json) =>
       StrategyDeadlines(
         id: json["id"],
-        name: nameValues.map[json["name"]]!,
+        name: nameValuesDeadline.map[json["name"]]!,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": nameValues.reverse[name],
+        "name": nameValuesDeadline.reverse[name],
       };
 }
 
-enum Name { HUMAN_RESOURCES, PRIVATE_EQUITY, SALES, VENTURE }
+enum NameStrategy { HUMAN_RESOURCES, PRIVATE_EQUITY, SALES, VENTURE }
 
-final nameValues = EnumValues({
-  "Human Resources": Name.HUMAN_RESOURCES,
-  "Private Equity": Name.PRIVATE_EQUITY,
-  "Sales": Name.SALES,
-  "Venture": Name.VENTURE
+final nameValuesDeadline = EnumValues({
+  "Human Resources": NameStrategy.HUMAN_RESOURCES,
+  "Private Equity": NameStrategy.PRIVATE_EQUITY,
+  "Sales": NameStrategy.SALES,
+  "Venture": NameStrategy.VENTURE
 });
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}
 
 class ResponseDeadline {
   final int id;

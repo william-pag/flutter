@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/config/config.dart' show Progress, HttpClient;
-import 'package:pag_flutter/model/model.dart' show Department, Strategy;
+import 'package:pag_flutter/model/model.dart' show Department;
 import 'package:pag_flutter/model/pair.dart';
 import 'package:pag_flutter/service/service.dart' show DepartmentService;
 
