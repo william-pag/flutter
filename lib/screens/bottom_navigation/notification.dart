@@ -55,8 +55,8 @@ class _BoxNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(5),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.grey[350],
         borderRadius: const BorderRadius.all(Radius.circular(5)),
