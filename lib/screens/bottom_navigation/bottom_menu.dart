@@ -72,11 +72,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomColor.themeRed,
-        title: const AppBarCustom(
-          name: 'Alta Jackson',
-          avatar:
-              'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/403.jpg',
-        ),
+        title: const AppBarCustom(),
         titleSpacing: 0,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),

@@ -7,27 +7,19 @@ import 'package:pag_flutter/config/config.dart' show Progress;
 import 'package:pag_flutter/screens/screens.dart' show LoginScreen;
 
 class AppBarCustom extends StatelessWidget {
-  final String avatar;
-  final String name;
-  const AppBarCustom({super.key, required this.avatar, required this.name});
+  const AppBarCustom({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MeBloc()..add(LoadMe()),
-      child: _AppBarCustom(name: name, avatar: avatar),
+      child: const _AppBarCustom(),
     );
   }
 }
 
 class _AppBarCustom extends StatelessWidget {
-  const _AppBarCustom({
-    required this.name,
-    required this.avatar,
-  });
-
-  final String name;
-  final String avatar;
+  const _AppBarCustom();
 
   @override
   Widget build(BuildContext context) {
