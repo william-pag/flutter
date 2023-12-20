@@ -11,10 +11,7 @@ class AppBarCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MeBloc()..add(LoadMe()),
-      child: const _AppBarCustom(),
-    );
+    return const _AppBarCustom();
   }
 }
 

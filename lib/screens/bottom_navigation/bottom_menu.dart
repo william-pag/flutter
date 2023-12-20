@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pag_flutter/bloc/me/me_bloc.dart';
 import 'package:pag_flutter/constants/colors.dart';
 import 'package:pag_flutter/items/app_bar.dart';
+import 'package:pag_flutter/items/box_user_info.dart';
 import 'package:pag_flutter/screens/bottom_navigation/deadline.dart';
 import 'package:pag_flutter/screens/bottom_navigation/home.dart';
 import 'package:pag_flutter/screens/bottom_navigation/list_users.dart';
@@ -20,7 +23,10 @@ class BottomMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MenuPage();
+    return BlocProvider(
+      create: (context) => MeBloc()..add(LoadMe()),
+      child: const MenuPage(),
+    );
   }
 }
 
@@ -91,6 +97,21 @@ class _MenuPageState extends State<MenuPage> {
         onTap: _onItemTapped,
         showSelectedLabels: false,
         showUnselectedLabels: false,
+      ),
+      drawerEnableOpenDragGesture: true,
+      drawer: Container(
+        color: Colors.white,
+        width: MediaQuery.of(context).size.width * 0.75,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.3,
+              color: Colors.deepPurple,
+              child: const BoxUserInfo(),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pag_flutter/bloc/summary_users/summary_users_bloc.dart';
 import 'package:pag_flutter/components/loading.dart';
 import 'package:pag_flutter/config/config.dart';
@@ -124,70 +125,162 @@ class UserDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      elevation: 1,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
       ),
-      child: FutureBuilder<ResponseDAO<DetailUser>>(
-        future: _getDetailUser(id: userId),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<ResponseDAO<DetailUser>> snapshot,
-        ) {
-          if (snapshot.hasData) {
-            final user = snapshot.data?.data! as DetailUser;
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        user.image,
-                        fit: BoxFit.fill,
-                        width: 60,
-                        height: 60,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        alignment: Alignment.center,
+        child: FutureBuilder<ResponseDAO<DetailUser>>(
+          future: _getDetailUser(id: userId),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<ResponseDAO<DetailUser>> snapshot,
+          ) {
+            if (snapshot.hasData) {
+              final user = snapshot.data?.data! as DetailUser;
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.network(
+                          user.image,
+                          fit: BoxFit.fill,
+                          width: 60,
+                          height: 60,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          user.name,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue[800],
+                      const SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue[800],
+                            ),
                           ),
-                        ),
-                        Text(
-                          nameValuesTitle.reverse[user.title.name] ?? 'Title',
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Email'),
-                        Text(user.email),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            );
-          }
-          return const Loading();
-        },
+                          Text(
+                            nameValuesTitle.reverse[user.title.name] ?? 'Title',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Last Login:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              DateFormat('dd-MM-yyyy').format(user.lastLogin),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Email:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              user.email,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Location:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              user.location.name,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Department:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              user.department.name,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Evaluator:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              user.evaluator.name,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Strategy:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              user.strategy.name,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(flex: 1, child: Text('Form:')),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              user.evaluationType.name,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              );
+            }
+            return const Loading();
+          },
+        ),
       ),
     );
   }
