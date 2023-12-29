@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pag_flutter/bloc/bloc.dart' show MeBloc, LoadMe, MeState;
+import 'package:pag_flutter/bloc/bloc.dart' show MeBloc, MeState;
 import 'package:pag_flutter/components/components.dart' show Loading;
 import 'package:pag_flutter/config/config.dart' show Progress;
 import 'package:pag_flutter/screens/screens.dart' show LoginScreen;
