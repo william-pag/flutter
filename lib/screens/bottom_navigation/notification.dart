@@ -32,7 +32,10 @@ class Notifications extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 final notification = notifications[index];
                 return _BoxNotification(
-                    notification: notification, index: index);
+                  key: ValueKey(notification.id),
+                  notification: notification,
+                  index: index,
+                );
               },
             );
           }
@@ -48,9 +51,10 @@ class _BoxNotification extends StatelessWidget {
   final int index;
   final NotificationShort notification;
   const _BoxNotification({
+    Key? key,
     required this.notification,
     required this.index,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

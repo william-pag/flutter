@@ -4,8 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:pag_flutter/bloc/summary_users/summary_users_bloc.dart';
 import 'package:pag_flutter/components/loading.dart';
 import 'package:pag_flutter/config/config.dart';
-import 'package:pag_flutter/config/enum.dart';
-import 'package:pag_flutter/config/http.dart';
 import 'package:pag_flutter/model/user.dart';
 import 'package:pag_flutter/screens/screens.dart';
 import 'package:pag_flutter/service/service.dart';
@@ -41,7 +39,9 @@ class _ListOfUsers extends StatelessWidget {
             return ListView.builder(
               itemCount: state.users.length,
               itemBuilder: (BuildContext _, int index) {
-                return _BoxSummaryUser(user: state.users[index], index: index);
+                final user = state.users[index];
+                return _BoxSummaryUser(
+                    key: ValueKey(user.id), user: user, index: index);
               },
             );
           }
@@ -56,9 +56,10 @@ class _BoxSummaryUser extends StatelessWidget {
   final int index;
   final SummaryUser user;
   const _BoxSummaryUser({
+    Key? key,
     required this.user,
     required this.index,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

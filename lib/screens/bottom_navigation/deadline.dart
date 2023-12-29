@@ -64,7 +64,8 @@ class _Deadline extends StatelessWidget {
                 return ListView.builder(
                   itemCount: state.deadlines.length,
                   itemBuilder: (context, index) {
-                    return BoxDeadline(deadline: state.deadlines[index]);
+                  final deadline = state.deadlines[index];
+                    return BoxDeadline(deadline: deadline, key: ValueKey(deadline.id),);
                   },
                   addAutomaticKeepAlives: false,
                   addRepaintBoundaries: false,

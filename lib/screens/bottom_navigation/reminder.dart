@@ -53,8 +53,10 @@ class _Reminder extends StatelessWidget {
                 return ListView.builder(
                   itemCount: state.notiLogs.length,
                   itemBuilder: (context, index) {
+                    final notiLog = state.notiLogs[index];
                     return _BoxReminder(
-                      notiLog: state.notiLogs[index],
+                      key: ValueKey(notiLog.id),
+                      notiLog: notiLog,
                       index: index,
                     );
                   },
@@ -76,9 +78,10 @@ class _BoxReminder extends StatelessWidget {
   final int index;
   final NotificationLog notiLog;
   const _BoxReminder({
+    Key? key,
     required this.notiLog,
     required this.index,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
