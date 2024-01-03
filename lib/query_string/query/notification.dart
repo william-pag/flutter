@@ -1,6 +1,6 @@
-class NotificationQueryString {
+final class NotificationQueryString {
   static final shard = NotificationQueryString();
-  
+
   String getAllNotifications() {
     return '''
       {

@@ -10,7 +10,8 @@ class NotificationLogState extends Equatable {
 }
 
 final class NotificationLogInitial extends NotificationLogState {
-  const NotificationLogInitial(
-      {super.status = Progress.loading,
-      super.notiLogs = const <NotificationLog>[]});
+  const NotificationLogInitial({
+    super.status = Progress.loading,
+    super.notiLogs = const <NotificationLog>[],
+  });
 }
