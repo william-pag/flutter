@@ -126,206 +126,208 @@ class UserDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        color: Colors.white,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: FutureBuilder<ResponseDAO<DetailUser>>(
-          future: _getDetailUser(id: userId),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<ResponseDAO<DetailUser>> snapshot,
-          ) {
-            if (snapshot.hasData) {
-              final user = snapshot.data?.data! as DetailUser;
-              final arrInfos = [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Last Login:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        DateFormat('dd-MM-yyyy').format(user.lastLogin),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Email:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        user.email,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Location:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        user.location.name,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Department:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        user.department.name,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Evaluator:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        user.evaluator.name,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Strategy:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        user.strategy.name,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Form:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        user.evaluationType.name,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-              ];
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+      child: Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: FutureBuilder<ResponseDAO<DetailUser>>(
+            future: _getDetailUser(id: userId),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<ResponseDAO<DetailUser>> snapshot,
+            ) {
+              if (snapshot.hasData) {
+                final user = snapshot.data?.data! as DetailUser;
+                final arrInfos = [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.network(
-                          user.image,
-                          fit: BoxFit.fill,
-                          width: 60,
-                          height: 60,
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Last Login:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            user.name,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue[800],
-                            ),
-                          ),
-                          Text(
-                            nameValuesTitle.reverse[user.title.name] ?? 'Title',
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      )
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          DateFormat('dd-MM-yyyy').format(user.lastLogin),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 30),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext _, int index) {
-                      return arrInfos[index];
-                    },
-                    separatorBuilder: (BuildContext _, int index) {
-                      return const SizedBox(height: 10);
-                    },
-                    itemCount: arrInfos.length,
-                  )
-                ],
-              );
-            }
-            return const Loading();
-          },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Email:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          user.email,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Location:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          user.location.name,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Department:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          user.department.name,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Evaluator:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          user.evaluator.name,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Strategy:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          user.strategy.name,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Form:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          user.evaluationType.name,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                ];
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Image.network(
+                            user.image,
+                            fit: BoxFit.fill,
+                            width: 60,
+                            height: 60,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.name,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800],
+                              ),
+                            ),
+                            Text(
+                              nameValuesTitle.reverse[user.title.name] ??
+                                  'Title',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext _, int index) {
+                        return arrInfos[index];
+                      },
+                      separatorBuilder: (BuildContext _, int index) {
+                        return const SizedBox(height: 10);
+                      },
+                      itemCount: arrInfos.length,
+                    )
+                  ],
+                );
+              }
+              return const Loading();
+            },
+          ),
         ),
       ),
     );
