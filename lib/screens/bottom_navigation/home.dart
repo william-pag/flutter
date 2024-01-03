@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/bloc/bloc.dart';
+import 'package:pag_flutter/bloc/home/overall_progress/overall_progress_bloc.dart';
 import 'package:pag_flutter/components/dropdown_select/departments.dart';
 import 'package:pag_flutter/components/dropdown_select/strategies.dart';
 
@@ -17,6 +18,10 @@ class Home extends StatelessWidget {
         BlocProvider(
           create: (BuildContext _) =>
               DepartmentBloc()..add(DepartmentLoading()),
+        ),
+        BlocProvider(
+          create: (BuildContext _) =>
+              OverallProgressBloc()..add(InitialOverallEvent()),
         ),
       ],
       child: const _Home(),
@@ -66,7 +71,15 @@ class _Home extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Text(text),
+                      child: BlocConsumer<OverallProgressBloc,
+                          OverallProgressState>(
+                        listener: (BuildContext _, OverallProgressState state) {
+                          print([74, state]);
+                        },
+                        builder: (BuildContext _, OverallProgressState state) {
+                          return Text(text);
+                        },
+                      ),
                     ),
                     const SizedBox(width: 10),
                     const Expanded(

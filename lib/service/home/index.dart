@@ -23,7 +23,8 @@ class HomeService {
         error: response.error,
       );
     } else {
-      final overallProgress = OverallProgress.fromJson(response.data['data']);
+      final overallProgress =
+          OverallProgress.fromJson(response.data['data']['overallProgress']);
       return ResponseDAO(
         hasError: false,
         data: overallProgress,
