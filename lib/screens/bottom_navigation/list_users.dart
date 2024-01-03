@@ -125,15 +125,11 @@ class UserDetailDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
+    return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        alignment: Alignment.center,
+        color: Colors.white,
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: FutureBuilder<ResponseDAO<DetailUser>>(
           future: _getDetailUser(id: userId),
           builder: (
@@ -142,6 +138,141 @@ class UserDetailDialog extends StatelessWidget {
           ) {
             if (snapshot.hasData) {
               final user = snapshot.data?.data! as DetailUser;
+              final arrInfos = [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Last Login:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        DateFormat('dd-MM-yyyy').format(user.lastLogin),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Email:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        user.email,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Location:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        user.location.name,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Department:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        user.department.name,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Evaluator:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        user.evaluator.name,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Strategy:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        user.strategy.name,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Form:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        user.evaluationType.name,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+              ];
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -180,101 +311,15 @@ class UserDetailDialog extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Last Login:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              DateFormat('dd-MM-yyyy').format(user.lastLogin),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Email:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              user.email,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Location:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              user.location.name,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Department:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              user.department.name,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Evaluator:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              user.evaluator.name,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Strategy:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              user.strategy.name,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(flex: 1, child: Text('Form:')),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              user.evaluationType.name,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext _, int index) {
+                      return arrInfos[index];
+                    },
+                    separatorBuilder: (BuildContext _, int index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemCount: arrInfos.length,
                   )
                 ],
               );
