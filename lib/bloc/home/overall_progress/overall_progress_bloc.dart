@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/config/enum.dart';
 import 'package:pag_flutter/config/http.dart';
-import 'package:pag_flutter/model/overall_progress.dart';
 import 'package:pag_flutter/service/home/index.dart';
 
 part 'overall_progress_event.dart';
@@ -30,12 +31,28 @@ class OverallProgressBloc
     if (response.hasError) {
       emit(const OverallProgressState(
         progress: Progress.error,
-        overall: null,
+        list: [],
       ));
     } else {
+      const radius = 30.0;
+      final progress = response.data!;
+      final List<PieChartSectionData> list = [
+        PieChartSectionData(
+            value: progress.complete.toDouble(),
+            color: Colors.blueAccent,
+            radius: radius,
+            showTitle: false,
+            title: '${progress.percentComplete.toDouble()}%'),
+        PieChartSectionData(
+          value: (progress.overall - progress.complete).toDouble(),
+          color: Colors.grey,
+          radius: radius,
+          showTitle: false,
+        )
+      ];
       emit(OverallProgressState(
         progress: Progress.loaded,
-        overall: response.data,
+        list: list,
       ));
     }
   }

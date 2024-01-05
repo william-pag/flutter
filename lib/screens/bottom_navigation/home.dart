@@ -1,9 +1,11 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/bloc/home/overall_progress/overall_progress_bloc.dart';
 import 'package:pag_flutter/components/dropdown_select/departments.dart';
 import 'package:pag_flutter/components/dropdown_select/strategies.dart';
+import 'package:pag_flutter/config/enum.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -77,6 +79,36 @@ class _Home extends StatelessWidget {
                           print([74, state]);
                         },
                         builder: (BuildContext _, OverallProgressState state) {
+                          if (state.progress == Progress.loaded) {
+                            return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Overall Progress',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 1.0,
+                                  child: Stack(
+                                    children: [
+                                      PieChart(
+                                        PieChartData(
+                                          sections: state.list,
+                                          centerSpaceRadius: 40.0,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(state.list.first.title),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
                           return Text(text);
                         },
                       ),
