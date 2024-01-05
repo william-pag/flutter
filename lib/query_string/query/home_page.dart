@@ -25,4 +25,80 @@ final class HomeQueryStr {
       }
     ''';
   }
+  String getPE({
+    required int departmentId,
+    required int strategyId,
+  }) {
+    if (departmentId == 0 && strategyId == 0) {
+      return '''
+        {
+          performanceEvaluation {
+            percentComplete
+            complete
+            overall
+          }
+        }
+      ''';
+    }
+    return '''
+      {
+        performanceEvaluation(departmentIds: $departmentId, strategyId: $strategyId) {
+          percentComplete
+          complete
+          overall
+        }
+      }
+    ''';
+  }
+  String getLOC({
+    required int departmentId,
+    required int strategyId,
+  }) {
+    if (departmentId == 0 && strategyId == 0) {
+      return '''
+        {
+          listContributors {
+            percentComplete
+            complete
+            overall
+          }
+        }
+      ''';
+    }
+    return '''
+      {
+        listContributors(departmentIds: $departmentId, strategyId: $strategyId) {
+          percentComplete
+          complete
+          overall
+        }
+      }
+    ''';
+  }
+
+  String getSA({
+    required int departmentId,
+    required int strategyId,
+  }) {
+    if (departmentId == 0 && strategyId == 0) {
+      return '''
+        {
+          selfAssessments {
+            percentComplete
+            complete
+            overall
+          }
+        }
+      ''';
+    }
+    return '''
+      {
+        selfAssessments(departmentIds: $departmentId, strategyId: $strategyId) {
+          percentComplete
+          complete
+          overall
+        }
+      }
+    ''';
+  }
 }

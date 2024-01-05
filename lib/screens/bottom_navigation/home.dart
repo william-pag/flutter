@@ -131,13 +131,13 @@ class _Home extends StatelessWidget {
                                     children: [
                                       PieChart(
                                         PieChartData(
-                                          sections: state.list[0],
+                                          sections: state.list[1],
                                           centerSpaceRadius: 40.0,
                                         ),
                                       ),
                                       Center(
                                         child: Text(
-                                          state.list[0][0].title,
+                                          state.list[1][0].title,
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
@@ -176,13 +176,13 @@ class _Home extends StatelessWidget {
                                     children: [
                                       PieChart(
                                         PieChartData(
-                                          sections: state.list[0],
+                                          sections: state.list[2],
                                           centerSpaceRadius: 40.0,
                                         ),
                                       ),
                                       Center(
                                         child: Text(
-                                          state.list[0][0].title,
+                                          state.list[2][0].title,
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
@@ -214,13 +214,13 @@ class _Home extends StatelessWidget {
                                     children: [
                                       PieChart(
                                         PieChartData(
-                                          sections: state.list[0],
+                                          sections: state.list[3],
                                           centerSpaceRadius: 40.0,
                                         ),
                                       ),
                                       Center(
                                         child: Text(
-                                          state.list[0][0].title,
+                                          state.list[3][0].title,
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
