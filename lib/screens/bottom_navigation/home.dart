@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pag_flutter/bloc/bloc.dart';
 import 'package:pag_flutter/bloc/home/overall_progress/overall_progress_bloc.dart';
-import 'package:pag_flutter/components/dropdown_select/departments.dart';
-import 'package:pag_flutter/components/dropdown_select/strategies.dart';
+import 'package:pag_flutter/components/components.dart';
 import 'package:pag_flutter/config/enum.dart';
 
 class Home extends StatelessWidget {
@@ -36,7 +35,6 @@ class _Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String text = "Text";
     return ListView(
       addAutomaticKeepAlives: true,
       shrinkWrap: true,
@@ -65,23 +63,22 @@ class _Home extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
           height: 600,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Row(
+          child: BlocConsumer<OverallProgressBloc, OverallProgressState>(
+            listener: (BuildContext _, OverallProgressState state) {
+              // print([74, state]);
+            },
+            builder: (BuildContext _, OverallProgressState state) {
+              if (state.progress == Progress.loaded) {
+                return Column(
                   children: [
                     Expanded(
                       flex: 1,
-                      child: BlocConsumer<OverallProgressBloc,
-                          OverallProgressState>(
-                        listener: (BuildContext _, OverallProgressState state) {
-                          print([74, state]);
-                        },
-                        builder: (BuildContext _, OverallProgressState state) {
-                          if (state.progress == Progress.loaded) {
-                            return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
                                   'Overall Progress',
@@ -96,49 +93,155 @@ class _Home extends StatelessWidget {
                                     children: [
                                       PieChart(
                                         PieChartData(
-                                          sections: state.list,
+                                          sections: state.list[0],
                                           centerSpaceRadius: 40.0,
                                         ),
                                       ),
                                       Center(
-                                        child: Text(state.list.first.title),
+                                        child: Text(
+                                          state.list[0][0].title,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       )
                                     ],
                                   ),
                                 ),
                               ],
-                            );
-                          }
-                          return Text(text);
-                        },
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Overall Progress',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 1.0,
+                                  child: Stack(
+                                    children: [
+                                      PieChart(
+                                        PieChartData(
+                                          sections: state.list[0],
+                                          centerSpaceRadius: 40.0,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          state.list[0][0].title,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    const Expanded(
-                      flex: 1,
-                      child: Text("hello"),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              const Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
+                    const SizedBox(height: 10),
                     Expanded(
                       flex: 1,
-                      child: Text("hello"),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      flex: 1,
-                      child: Text("hello"),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Overall Progress',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 1.0,
+                                  child: Stack(
+                                    children: [
+                                      PieChart(
+                                        PieChartData(
+                                          sections: state.list[0],
+                                          centerSpaceRadius: 40.0,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          state.list[0][0].title,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Overall Progress',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 1.0,
+                                  child: Stack(
+                                    children: [
+                                      PieChart(
+                                        PieChartData(
+                                          sections: state.list[0],
+                                          centerSpaceRadius: 40.0,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          state.list[0][0].title,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                ),
-              )
-            ],
+                );
+              }
+
+              return const Loading();
+            },
           ),
         ),
       ],

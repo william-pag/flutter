@@ -2,7 +2,7 @@ part of 'overall_progress_bloc.dart';
 
 class OverallProgressState extends Equatable {
   final Progress progress;
-  final List<PieChartSectionData> list;
+  final List<List<PieChartSectionData>> list;
 
   const OverallProgressState({required this.progress, required this.list});
   @override
@@ -12,6 +12,6 @@ class OverallProgressState extends Equatable {
 final class OverallProgressLoading extends OverallProgressState {
   const OverallProgressLoading({
     super.progress = Progress.loading,
-    super.list = const <PieChartSectionData>[],
+    super.list = const <List<PieChartSectionData>>[],
   });
 }

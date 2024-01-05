@@ -28,6 +28,8 @@ class OverallProgressBloc
       HttpClient.shard.token,
     );
 
+    final List<List<PieChartSectionData>> arr = [];
+
     if (response.hasError) {
       emit(const OverallProgressState(
         progress: Progress.error,
@@ -36,7 +38,7 @@ class OverallProgressBloc
     } else {
       const radius = 30.0;
       final progress = response.data!;
-      final List<PieChartSectionData> list = [
+      arr.insert(0, [
         PieChartSectionData(
             value: progress.complete.toDouble(),
             color: Colors.blueAccent,
@@ -49,10 +51,10 @@ class OverallProgressBloc
           radius: radius,
           showTitle: false,
         )
-      ];
+      ]);
       emit(OverallProgressState(
         progress: Progress.loaded,
-        list: list,
+        list: arr,
       ));
     }
   }
