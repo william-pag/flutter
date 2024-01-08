@@ -101,4 +101,42 @@ final class HomeQueryStr {
       }
     ''';
   }
+
+  String getListPE({
+    required int departmentId,
+    required int strategyId,
+  }) {
+    if (departmentId == 0 && strategyId == 0) {
+      return '''
+        {
+          getListPerformanceEvaluations {
+            isComplete
+            completedPercentage
+            completePerformance
+            totalPerformance
+            user {
+              id
+              name
+              image
+            }
+          }
+        }
+      ''';
+    }
+    return '''
+      {
+        getListPerformanceEvaluations(departmentIds: $departmentId, strategyId: $strategyId) {
+          isComplete
+          completedPercentage
+          completePerformance
+          totalPerformance
+          user {
+            id
+            name
+            image
+          }
+        }
+      }
+    ''';
+  }
 }

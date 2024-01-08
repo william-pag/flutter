@@ -1,5 +1,5 @@
 import 'package:pag_flutter/config/config.dart';
-import 'package:pag_flutter/model/overall_progress.dart';
+import 'package:pag_flutter/model/model.dart';
 import 'package:pag_flutter/query_string/query/home_page.dart';
 
 class HomeService {
@@ -31,6 +31,7 @@ class HomeService {
       );
     }
   }
+
   Future<ResponseDAO<OverallProgress>> getPE({
     required String token,
     int strategyId = 0,
@@ -49,14 +50,15 @@ class HomeService {
         error: response.error,
       );
     } else {
-      final overallProgress =
-          OverallProgress.fromJson(response.data['data']['performanceEvaluation']);
+      final overallProgress = OverallProgress.fromJson(
+          response.data['data']['performanceEvaluation']);
       return ResponseDAO(
         hasError: false,
         data: overallProgress,
       );
     }
   }
+
   Future<ResponseDAO<OverallProgress>> getLOC({
     required String token,
     int strategyId = 0,
@@ -83,6 +85,7 @@ class HomeService {
       );
     }
   }
+
   Future<ResponseDAO<OverallProgress>> getSA({
     required String token,
     int strategyId = 0,
@@ -106,6 +109,34 @@ class HomeService {
       return ResponseDAO(
         hasError: false,
         data: overallProgress,
+      );
+    }
+  }
+
+  Future<ResponseDAO<List<GetListPerformanceEvaluation>>> getListPE({
+    required String token,
+    int strategyId = 0,
+    int departmentId = 0,
+  }) async {
+    final String queryStr = HomeQueryStr.shared.getListPE(
+      departmentId: departmentId,
+      strategyId: strategyId,
+    );
+
+    HttpClient.shard.token = token;
+    final response = await HttpClient.shard.query(queryStr);
+    if (response.hasError) {
+      return ResponseDAO(
+        hasError: true,
+        error: response.error,
+      );
+    } else {
+      final listPE =
+          DataGetListPerformanceEvaluation.fromJson(response.data['data'])
+              .getListPerformanceEvaluations;
+      return ResponseDAO(
+        hasError: false,
+        data: listPE,
       );
     }
   }
